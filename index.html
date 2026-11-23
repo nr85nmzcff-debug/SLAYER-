@@ -1,4 +1,351 @@
-font-size: 10px;
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b0b0b">
+<title>SLAYER SHOP</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #0b0b0b;
+  --panel: #141414;
+  --white: #f3f1ef;
+  --muted: #85817e;
+  --red: #a63d3d;
+  --line: #302020;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: 'Montserrat', sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.container {
+  width: min(1100px, 90%);
+  margin: auto;
+}
+
+/* INTRO SCREEN */
+
+.intro-screen {
+  min-height: 100vh;
+  min-height: 100svh;
+  background:
+    radial-gradient(ellipse at 50% 35%, #351818 0%, transparent 55%),
+    #0b0b0b;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 40px 25px;
+}
+
+.intro-logo {
+  font-size: clamp(48px, 11vw, 85px);
+  font-weight: 900;
+  letter-spacing: 10px;
+}
+
+.intro-subtitle {
+  color: var(--red);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 8px;
+  margin-top: 5px;
+}
+
+.intro-line {
+  width: 55px;
+  height: 2px;
+  background: var(--red);
+  margin: 38px 0;
+}
+
+.intro-notice {
+  max-width: 520px;
+  color: #aaa19e;
+  font-size: 12px;
+  line-height: 2;
+}
+
+.intro-notice h2 {
+  color: #bd6565;
+  font-size: 13px;
+  letter-spacing: 4px;
+  margin-bottom: 20px;
+}
+
+.intro-notice p + p {
+  margin-top: 14px;
+}
+
+.intro-shop {
+  display: block;
+  width: min(520px, 100%);
+  margin-top: 48px;
+  padding: 21px;
+  background: var(--red);
+  color: white;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 5px;
+  text-align: center;
+  transition: .25s;
+}
+
+.intro-shop:hover {
+  background: #c04d4d;
+  transform: translateY(-3px);
+}
+
+/* HEADER */
+
+header {
+  padding: 25px 0;
+  border-bottom: 1px solid #252020;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 27px;
+  font-weight: 900;
+  letter-spacing: 5px;
+}
+
+.logo span {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 8px;
+  color: var(--red);
+  margin-top: 4px;
+}
+
+.menu {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+/* HERO */
+
+.hero {
+  padding: 100px 0 85px;
+  border-bottom: 1px solid var(--line);
+  background: radial-gradient(ellipse at 80% 30%, #351818 0%, transparent 45%);
+}
+
+.eyebrow {
+  color: #bd6565;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 4px;
+  margin-bottom: 25px;
+}
+
+.hero h1 {
+  font-size: clamp(48px, 10vw, 105px);
+  line-height: .95;
+  font-weight: 900;
+  letter-spacing: -5px;
+}
+
+.hero h1 span {
+  color: var(--red);
+}
+
+.main-button {
+  display: inline-block;
+  margin-top: 32px;
+  padding: 16px 25px;
+  background: var(--red);
+  color: white;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  transition: .25s;
+}
+
+.main-button:hover {
+  background: #c04d4d;
+  transform: translateY(-3px);
+}
+
+/* SECTIONS */
+
+section {
+  padding: 65px 0;
+}
+
+.section-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.section-top h2 {
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+.section-top span {
+  color: var(--red);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+/* CATEGORIES */
+
+.categories {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.category {
+  padding: 25px 15px;
+  background: var(--panel);
+  border: 1px solid #292323;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  transition: .25s;
+}
+
+.category:hover {
+  border-color: var(--red);
+  background: #211515;
+}
+
+/* SEARCH */
+
+.search {
+  width: 100%;
+  padding: 16px;
+  margin-bottom: 20px;
+  background: var(--panel);
+  border: 1px solid #302727;
+  outline: none;
+  color: white;
+  font-family: inherit;
+  font-size: 12px;
+}
+
+.search:focus {
+  border-color: var(--red);
+}
+
+/* PRODUCTS */
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+.product {
+  background: var(--panel);
+  border: 1px solid #282222;
+  transition: .3s;
+  overflow: hidden;
+}
+
+.product:hover {
+  transform: translateY(-5px);
+  border-color: var(--red);
+}
+
+.product-image {
+  width: 100%;
+  height: 300px;
+  display: block;
+  object-fit: cover;
+  background: #191313;
+}
+
+.product-info {
+  padding: 22px;
+}
+
+.product-tag {
+  color: #bd6565;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 3px;
+}
+
+.product h3 {
+  margin-top: 10px;
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.product p {
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 9px;
+  line-height: 1.6;
+}
+
+.product-size {
+  display: inline-block;
+  margin-top: 16px;
+  padding: 8px 12px;
+  border: 1px solid #693333;
+  color: #d27a7a;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.product-price {
+  display: block;
+  margin-top: 16px;
+  color: #e04444;
+  font-size: 25px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.product-link {
+  display: block;
+  margin-top: 20px;
+  padding: 14px;
+  text-align: center;
+  background: #251717;
+  color: #d27a7a;
+  font-size: 10px;
   font-weight: 900;
   letter-spacing: 2px;
   transition: .2s;
@@ -8,6 +355,8 @@ font-size: 10px;
   background: var(--red);
   color: white;
 }
+
+/* CONTACT */
 
 .contact {
   background: linear-gradient(120deg, #241414, #111);
@@ -29,6 +378,8 @@ font-size: 10px;
   font-size: 12px;
 }
 
+/* FOOTER */
+
 footer {
   padding: 30px 0;
   text-align: center;
@@ -36,6 +387,8 @@ footer {
   font-size: 10px;
   letter-spacing: 3px;
 }
+
+/* MOBILE */
 
 @media(max-width: 600px) {
   .hero {
@@ -62,6 +415,34 @@ footer {
 </head>
 
 <body>
+
+<!-- INTRO SCREEN -->
+
+<div class="intro-screen" id="intro">
+  <div class="intro-logo">SLAYER</div>
+  <div class="intro-subtitle">S H O P</div>
+
+  <div class="intro-line"></div>
+
+  <div class="intro-notice">
+    <h2>IMPORTANT NOTICE</h2>
+
+    <p>
+      Please review product information and applicable safety
+      documentation before making any decisions.
+    </p>
+
+    <p>
+      Product information and certificates should be independently
+      verified. All products are subject to applicable laws
+      and regulations.
+    </p>
+  </div>
+
+  <a href="#catalog" class="intro-shop">SHOP ↗</a>
+</div>
+
+<!-- MAIN SITE -->
 
 <header>
   <div class="container">
@@ -92,11 +473,11 @@ footer {
     </div>
 
     <div class="categories">
-      <a class="category" href="#catalog">препараты  01 ↗</a>
+      <a class="category" href="#catalog">Реагенты 01 ↗</a>
       <a class="category" href="#catalog">Пептиды 02 ↗</a>
-      <a class="category" href="#catalog">Стероиды 03 ↗</a>
-      <a class="category" href="#catalog">Препараты 04 ↗</a>
-      <a class="category" href="#catalog">Другое 05 ↗</a>
+      <a class="category" href="#catalog">Препараты 03 ↗</a>
+      <a class="category" href="#catalog">Стероиды 04 ↗</a>
+      <a class="category" href="#catalog">Воспомогательные 05 ↗</a>
     </div>
   </section>
 
@@ -126,7 +507,7 @@ footer {
 
         <div class="product-info">
           <div class="product-tag">SLAYER / ITEM 001</div>
-          <h3>ERDA</h3>
+          <h3>Erdafitinib</h3>
           <p>1 g</p>
           <div class="product-size">1 g</div>
           <div class="product-price">13.000₽</div>
@@ -146,6 +527,7 @@ footer {
   <section class="contact">
     <h2>NEED HELP?</h2>
     <p>Есть вопросы? Свяжись с нашим менеджером.</p>
+
     <a
       class="main-button"
       href="https://t.me/sorrowmachine"
