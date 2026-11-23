@@ -37,6 +37,10 @@ body {
   font-family: 'Montserrat', sans-serif;
 }
 
+body.intro-active {
+  overflow: hidden;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -47,11 +51,16 @@ a {
   margin: auto;
 }
 
-/* INTRO SCREEN */
+/* START SCREEN */
 
 .intro-screen {
-  min-height: 100vh;
-  min-height: 100svh;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow-y: auto;
   background:
     radial-gradient(ellipse at 50% 35%, #351818 0%, transparent 55%),
     #0b0b0b;
@@ -60,7 +69,14 @@ a {
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 40px 25px;
+  padding: 35px 25px;
+  transition: opacity .4s ease, visibility .4s ease;
+}
+
+.intro-screen.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .intro-logo {
@@ -81,7 +97,7 @@ a {
   width: 55px;
   height: 2px;
   background: var(--red);
-  margin: 38px 0;
+  margin: 35px 0;
 }
 
 .intro-notice {
@@ -105,7 +121,7 @@ a {
 .intro-shop {
   display: block;
   width: min(520px, 100%);
-  margin-top: 48px;
+  margin-top: 45px;
   padding: 21px;
   background: var(--red);
   color: white;
@@ -113,6 +129,9 @@ a {
   font-weight: 900;
   letter-spacing: 5px;
   text-align: center;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
   transition: .25s;
 }
 
@@ -414,9 +433,9 @@ footer {
 </style>
 </head>
 
-<body>
+<body class="intro-active">
 
-<!-- INTRO SCREEN -->
+<!-- FIRST SCREEN -->
 
 <div class="intro-screen" id="intro">
   <div class="intro-logo">SLAYER</div>
@@ -426,12 +445,10 @@ footer {
 
   <div class="intro-notice">
     <h2>IMPORTANT NOTICE</h2>
-
     <p>
       Please review product information and applicable safety
       documentation before making any decisions.
     </p>
-
     <p>
       Product information and certificates should be independently
       verified. All products are subject to applicable laws
@@ -439,7 +456,9 @@ footer {
     </p>
   </div>
 
-  <a href="#catalog" class="intro-shop">SHOP ↗</a>
+  <button class="intro-shop" id="shopButton" type="button">
+    SHOP ↗
+  </button>
 </div>
 
 <!-- MAIN SITE -->
@@ -473,11 +492,10 @@ footer {
     </div>
 
     <div class="categories">
-      <a class="category" href="#catalog">Реагенты 01 ↗</a>
-      <a class="category" href="#catalog">Пептиды 02 ↗</a>
-      <a class="category" href="#catalog">Препараты 03 ↗</a>
-      <a class="category" href="#catalog">Стероиды 04 ↗</a>
-      <a class="category" href="#catalog">Воспомогательные 05 ↗</a>
+      <a class="category" href="#catalog">CATEGORY 01 ↗</a>
+      <a class="category" href="#catalog">CATEGORY 02 ↗</a>
+      <a class="category" href="#catalog">CATEGORY 03 ↗</a>
+      <a class="category" href="#catalog">CATEGORY 04 ↗</a>
     </div>
   </section>
 
@@ -498,19 +516,34 @@ footer {
     <div class="products" id="products">
 
       <article class="product">
-        <img
-          class="product-image"
-          src="https://i.postimg.cc/Y9F1ctKs/IMG-5131.jpg"
-          alt="ERDA"
-          loading="lazy"
-        >
 
         <div class="product-info">
           <div class="product-tag">SLAYER / ITEM 001</div>
-          <h3>Erdafitinib</h3>
+          <h3>erdafitinib</h3>
           <p>1 g</p>
           <div class="product-size">1 g</div>
           <div class="product-price">13.000₽</div>
+          
+          <div class="product-info">
+          <div class="product-tag">SLAYER / ITEM 002</div>
+          <h3>ky19382</h3>
+          <p>1 g</p>
+          <div class="product-size">1 g</div>
+          <div class="product-price">20.000₽</div>
+
+          <div class="product-info">
+          <div class="product-tag">SLAYER / ITEM 003</div>
+          <h3>Way316606</h3>
+          <p>1 g</p>
+          <div class="product-size">1 g</div>
+          <div class="product-price">13.500₽</div>
+
+          <div class="product-info">
+          <div class="product-tag">SLAYER / ITEM 004</div>
+          <h3>infigratinib</h3>
+          <p>1 g</p>
+          <div class="product-size">1 g</div>
+          <div class="product-price">20.000₽</div>
 
           <a
             class="product-link"
@@ -543,6 +576,19 @@ footer {
 </footer>
 
 <script>
+const intro = document.getElementById('intro');
+const shopButton = document.getElementById('shopButton');
+
+shopButton.addEventListener('click', () => {
+  intro.classList.add('hidden');
+  document.body.classList.remove('intro-active');
+
+  setTimeout(() => {
+    intro.remove();
+    window.scrollTo(0, 0);
+  }, 400);
+});
+
 const search = document.getElementById('search');
 const products = document.querySelectorAll('.product');
 
