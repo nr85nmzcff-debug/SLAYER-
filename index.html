@@ -4,103 +4,309 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b0b0b">
 <title>SLAYER SHOP</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
 <style>
-*{box-sizing:border-box}
-body{
- margin:0;
- background:#0b0b0d;
- color:#fff;
- font-family:Arial,sans-serif;
+:root {
+  --bg: #0b0b0b;
+  --panel: #141414;
+  --panel2: #1b1b1b;
+  --white: #f3f1ef;
+  --muted: #85817e;
+  --red: #a63d3d;
+  --line: #302020;
 }
-header{
- padding:35px 20px;
- text-align:center;
- background:#111114;
- border-bottom:1px solid #29292e;
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
-.logo{
- font-size:38px;
- font-weight:900;
- letter-spacing:7px;
+
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: 'Montserrat', sans-serif;
 }
-.subtitle{
- font-size:15px;
- letter-spacing:9px;
- color:#999;
- margin-top:9px;
+
+a {
+  color: inherit;
+  text-decoration: none;
 }
-main{
- padding:20px;
- max-width:900px;
- margin:auto;
+
+.container {
+  width: min(1100px, 90%);
+  margin: auto;
 }
-h2{
- font-size:20px;
- margin:28px 0 15px;
+
+header {
+  padding: 25px 0;
+  border-bottom: 1px solid #252020;
 }
-.categories{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:12px;
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-.category{
- background:#1a1a1f;
- border:1px solid #303036;
- border-radius:13px;
- padding:22px 15px;
- font-size:15px;
- font-weight:bold;
- text-align:center;
+
+.logo {
+  font-size: 27px;
+  font-weight: 900;
+  letter-spacing: 5px;
 }
-.products{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:14px;
+
+.logo span {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 8px;
+  color: var(--red);
+  margin-top: 4px;
 }
-.product{
- background:#1a1a1f;
- border-radius:14px;
- overflow:hidden;
- border:1px solid #303036;
+
+.menu {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
 }
-.product img{
- width:100%;
- height:145px;
- object-fit:cover;
- background:#303036;
+
+.hero {
+  padding: 100px 0 85px;
+  border-bottom: 1px solid var(--line);
+  background: radial-gradient(ellipse at 80% 30%, #351818 0%, transparent 45%);
 }
-.product-info{padding:13px}
-.product-name{
- font-weight:bold;
- font-size:15px;
+
+.eyebrow {
+  color: #bd6565;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 4px;
+  margin-bottom: 25px;
 }
-.description{
- font-size:12px;
- color:#aaa;
- margin-top:8px;
+
+.hero h1 {
+  font-size: clamp(48px, 10vw, 105px);
+  line-height: .95;
+  font-weight: 900;
+  letter-spacing: -5px;
 }
-.contact{
- display:block;
- text-align:center;
- margin-top:30px;
- padding:17px;
- background:#fff;
- color:#111;
- text-decoration:none;
- border-radius:12px;
- font-weight:bold;
- letter-spacing:1px;
+
+.hero h1 span {
+  color: var(--red);
 }
-footer{
- text-align:center;
- color:#777;
- padding:30px;
- font-size:12px;
+
+.hero p {
+  margin-top: 25px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.8;
+  max-width: 420px;
 }
-@media(max-width:420px){
- main{padding:14px}
+
+.main-button {
+  display: inline-block;
+  margin-top: 32px;
+  padding: 16px 25px;
+  background: var(--red);
+  color: white;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  transition: .25s;
+}
+
+.main-button:hover {
+  background: #c04d4d;
+  transform: translateY(-3px);
+}
+
+section {
+  padding: 65px 0;
+}
+
+.section-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.section-top h2 {
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+.section-top span {
+  color: var(--red);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.categories {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.category {
+  padding: 25px 15px;
+  background: var(--panel);
+  border: 1px solid #292323;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  transition: .25s;
+}
+
+.category:hover {
+  border-color: var(--red);
+  background: #211515;
+}
+
+.search {
+  width: 100%;
+  padding: 16px;
+  margin-bottom: 20px;
+  background: var(--panel);
+  border: 1px solid #302727;
+  outline: none;
+  color: white;
+  font-family: inherit;
+  font-size: 12px;
+}
+
+.search:focus {
+  border-color: var(--red);
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+.product {
+  background: var(--panel);
+  border: 1px solid #282222;
+  transition: .3s;
+  overflow: hidden;
+}
+
+.product:hover {
+  transform: translateY(-5px);
+  border-color: var(--red);
+}
+
+.product-image {
+  height: 220px;
+  background: linear-gradient(145deg, #292020, #111);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #604343;
+  font-size: 35px;
+  font-weight: 900;
+  letter-spacing: 5px;
+}
+
+.product-info {
+  padding: 22px;
+}
+
+.product-tag {
+  color: #bd6565;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 3px;
+}
+
+.product h3 {
+  margin-top: 10px;
+  font-size: 17px;
+  font-weight: 900;
+}
+
+.product p {
+  color: var(--muted);
+  font-size: 11px;
+  margin-top: 8px;
+  line-height: 1.6;
+}
+
+.product-link {
+  display: block;
+  margin-top: 20px;
+  padding: 14px;
+  text-align: center;
+  background: #251717;
+  color: #d27a7a;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  transition: .2s;
+}
+
+.product-link:hover {
+  background: var(--red);
+  color: white;
+}
+
+.contact {
+  background: linear-gradient(120deg, #241414, #111);
+  border-top: 1px solid #482727;
+  border-bottom: 1px solid #482727;
+  text-align: center;
+  padding: 65px 20px;
+}
+
+.contact h2 {
+  font-size: 30px;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+.contact p {
+  color: var(--muted);
+  margin-top: 14px;
+  font-size: 12px;
+}
+
+footer {
+  padding: 30px 0;
+  text-align: center;
+  color: #65605e;
+  font-size: 10px;
+  letter-spacing: 3px;
+}
+
+@media(max-width: 600px) {
+  .hero {
+    padding: 75px 0;
+  }
+
+  .hero h1 {
+    letter-spacing: -3px;
+  }
+
+  .categories {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .products {
+    grid-template-columns: 1fr;
+  }
+
+  .product-image {
+    height: 190px;
+  }
 }
 </style>
 </head>
@@ -108,52 +314,103 @@ footer{
 <body>
 
 <header>
- <div class="logo">SLAYER</div>
- <div class="subtitle">S H O P</div>
+  <div class="container">
+    <nav>
+      <a href="#" class="logo">
+        SLAYER
+        <span>S H O P</span>
+      </a>
+      <div class="menu">EST. 2026</div>
+    </nav>
+  </div>
 </header>
 
 <main>
-
-<h2>КАТЕГОРИИ</h2>
-
-<div class="categories">
- <div class="category">КАТЕГОРИЯ 01</div>
- <div class="category">КАТЕГОРИЯ 02</div>
- <div class="category">КАТЕГОРИЯ 03</div>
- <div class="category">КАТЕГОРИЯ 04</div>
-</div>
-
-<h2>КАТАЛОГ</h2>
-
-<div class="products">
-
- <div class="product">
-  <img src="https://placehold.co/400x250/303036/ffffff?text=PRODUCT+01" alt="Товар 01">
-  <div class="product-info">
-   <div class="product-name">ТОВАР 01</div>
-   <div class="description">Описание товара</div>
+  <div class="hero">
+    <div class="container">
+      <div class="eyebrow">WELCOME TO SLAYER / OFFICIAL STORE</div>
+      <h1>BUILT IN<br><span>DARKNESS.</span></h1>
+      <p>Строгий стиль. Чёткие линии. Никаких лишних деталей. Добро пожаловать в SLAYER SHOP.</p>
+      <a href="#catalog" class="main-button">EXPLORE STORE ↗</a>
+    </div>
   </div>
- </div>
 
- <div class="product">
-  <img src="https://placehold.co/400x250/303036/ffffff?text=PRODUCT+02" alt="Товар 02">
-  <div class="product-info">
-   <div class="product-name">ТОВАР 02</div>
-   <div class="description">Описание товара</div>
-  </div>
- </div>
+  <section class="container">
+    <div class="section-top">
+      <h2>КАТЕГОРИИ</h2>
+      <span>01 / COLLECTION</span>
+    </div>
 
-</div>
+    <div class="categories">
+      <a class="category" href="#catalog">CATEGORY 01 ↗</a>
+      <a class="category" href="#catalog">CATEGORY 02 ↗</a>
+      <a class="category" href="#catalog">CATEGORY 03 ↗</a>
+      <a class="category" href="#catalog">CATEGORY 04 ↗</a>
+    </div>
+  </section>
 
-<a class="contact" href="https://t.me/sorrowmachine">
- СВЯЗАТЬСЯ С МЕНЕДЖЕРОМ
-</a>
+  <section class="container" id="catalog">
+    <div class="section-top">
+      <h2>КАТАЛОГ</h2>
+      <span>02 / PRODUCTS</span>
+    </div>
 
+    <input
+      class="search"
+      id="search"
+      type="search"
+      placeholder="ПОИСК ТОВАРОВ..."
+      aria-label="Поиск товаров"
+    >
+
+    <div class="products" id="products">
+      <article class="product">
+        <div class="product-image">001</div>
+        <div class="product-info">
+          <div class="product-tag">SLAYER / ITEM 001</div>
+          <h3>PRODUCT NAME</h3>
+          <p>Описание товара появится здесь.</p>
+          <a class="product-link" href="https://t.me/sorrowmachine">CONTACT MANAGER ↗</a>
+        </div>
+      </article>
+
+      <article class="product">
+        <div class="product-image">002</div>
+        <div class="product-info">
+          <div class="product-tag">SLAYER / ITEM 002</div>
+          <h3>PRODUCT NAME</h3>
+          <p>Описание товара появится здесь.</p>
+          <a class="product-link" href="https://t.me/sorrowmachine">CONTACT MANAGER ↗</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="contact">
+    <h2>NEED HELP?</h2>
+    <p>Есть вопросы? Свяжись с нашим менеджером.</p>
+    <a class="main-button" href="https://t.me/sorrowmachine">CONTACT MANAGER ↗</a>
+  </section>
 </main>
 
 <footer>
- SLAYER SHOP © 2026
+  SLAYER SHOP © 2026
 </footer>
+
+<script>
+const search = document.getElementById('search');
+const products = document.querySelectorAll('.product');
+
+search.addEventListener('input', () => {
+  const value = search.value.toLowerCase();
+
+  products.forEach(product => {
+    product.style.display = product.textContent.toLowerCase().includes(value)
+      ? ''
+      : 'none';
+  });
+});
+</script>
 
 </body>
 </html>
