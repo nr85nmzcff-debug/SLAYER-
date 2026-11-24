@@ -1,698 +1,426 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SLAYER SHOP</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>SLAYER SHOP</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050505;
+            --accent: #a63d3d;
+            --text: #ffffff;
+            --text-muted: #888888;
+            --card-bg: #111111;
+            --border: #222222;
+        }
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
-<style>
-:root {
-  --bg: #090909;
-  --panel: #141414;
-  --red: #a63d3d;
-  --text: #f2eeee;
-  --muted: #858080;
-  --line: #302727;
-}
-* { box-sizing: border-box; }
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: Montserrat, sans-serif;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-body.locked { overflow: hidden; }
-button { font: inherit; cursor: pointer; }
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            user-select: none;
+        }
 
-/* 3D Geometric Shapes Animation (ДОБАВЛЕНО) */
-.geo-container {
-  position: fixed;
-  top: 0; left: 0; width: 100vw; height: 100vh;
-  overflow: hidden;
-  z-index: 0;
-  perspective: 1000px;
-  pointer-events: none;
-}
-.geo-shape {
-  position: absolute;
-  border: 1px solid rgba(166, 61, 61, 0.15);
-  width: 150px; height: 150px;
-  animation: spin 10s infinite linear;
-}
-.shape1 { top: 15%; left: 5%; animation-duration: 15s; }
-.shape2 { bottom: 15%; right: 5%; animation-duration: 20s; border-radius: 50%; }
-.shape3 { top: 65%; left: 85%; width: 80px; height: 80px; animation-duration: 8s; border-radius: 50%; }
-.shape4 { top: 40%; left: 45%; width: 200px; height: 200px; animation-duration: 25s; border-radius: 50%; opacity: 0.5; }
-@keyframes spin {
-  0% { transform: rotateX(0) rotateY(0) rotateZ(0); }
-  100% { transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg); }
-}
+        /* --- SCREEN 1: SPLASH --- */
+        #splash {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: var(--bg); display: flex; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 9999;
+            transition: opacity 0.8s ease, visibility 0.8s;
+        }
 
-#intro {
-  position: fixed;
-  inset: 0;
-  z-index: 20;
-  background: radial-gradient(ellipse at center, #211010 0%, #090909 65%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 24px;
-}
-.intro-content { max-width: 500px; position: relative; z-index: 2; }
-.intro-logo {
-  font-size: clamp(60px, 15vw, 110px);
-  font-weight: 900;
-  letter-spacing: -8px;
-  margin: 0;
-  text-shadow: 0 0 35px #8d252555;
-}
-.intro-sub {
-  color: var(--muted);
-  letter-spacing: 5px;
-  font-size: 11px;
-  margin: 12px 0 45px;
-}
-.intro-tag {
-  color: var(--red);
-  letter-spacing: 4px;
-  font-size: 10px;
-  margin-bottom: 25px;
-}
-.main-button {
-  border: 1px solid var(--red);
-  background: transparent;
-  color: white;
-  padding: 16px 48px;
-  letter-spacing: 5px;
-  transition: .25s;
-}
-.main-button:hover {
-  background: var(--red);
-  box-shadow: 0 0 30px #a63d3d55;
-}
-header {
-  padding: 22px 7%;
-  border-bottom: 1px solid var(--line);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: relative;
-  z-index: 10;
-  background: rgba(9,9,9,0.8);
-}
-.logo { font-weight: 900; letter-spacing: 3px; }
-.header-label {
-  color: var(--muted);
-  font-size: 10px;
-  letter-spacing: 3px;
-}
-main {
-  width: min(1000px, 90%);
-  margin: auto;
-  padding: 65px 0;
-  position: relative;
-  z-index: 10;
-}
-.hero { margin-bottom: 50px; }
-.hero h1 {
-  font-size: clamp(35px, 8vw, 70px);
-  line-height: 1;
-  margin: 0 0 15px;
-  font-weight: 900;
-}
-.hero p {
-  color: var(--muted);
-  letter-spacing: 3px;
-  font-size: 10px;
-}
-.section-label {
-  color: var(--red);
-  letter-spacing: 4px;
-  font-size: 10px;
-  margin: 45px 0 18px;
-}
-.category-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-}
-.category {
-  min-height: 110px;
-  background: linear-gradient(135deg, #191515, #101010);
-  border: 1px solid var(--line);
-  color: white;
-  text-align: left;
-  padding: 23px;
-  transition: .25s;
-}
-.category:hover {
-  border-color: var(--red);
-  transform: translateY(-3px);
-}
-.category small {
-  display: block;
-  color: var(--red);
-  letter-spacing: 3px;
-  font-size: 9px;
-  margin-bottom: 12px;
-}
-.category strong {
-  font-size: 15px;
-  letter-spacing: 2px;
-}
-#catalog-view, #detail-view { display: none; }
-.view-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 30px;
-}
-.view-top h2 { font-size: 24px; }
-.back-button {
-  border: 1px solid var(--line);
-  color: white;
-  background: transparent;
-  padding: 12px 17px;
-  font-size: 10px;
-  letter-spacing: 2px;
-}
-.back-button:hover { border-color: var(--red); }
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 14px;
-}
-.product {
-  background: var(--panel);
-  border: 1px solid var(--line);
-  padding: 12px;
-  cursor: pointer;
-  transition: .2s;
-}
-.product:hover { border-color: var(--red); }
-.product-image {
-  height: 145px;
-  background: linear-gradient(145deg, #251818, #101010);
-  display: grid;
-  place-items: center;
-  color: #684040;
-  font-size: 30px;
-  margin-bottom: 15px;
-  overflow: hidden;
-}
-.product-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.product h3 { font-size: 13px; margin: 0 0 7px; text-transform: uppercase; }
-.product p { color: var(--muted); font-size: 10px; }
-.product-link {
-  color: var(--red);
-  font-size: 9px;
-  letter-spacing: 2px;
-}
-.detail-card {
-  border: 1px solid var(--line);
-  background: var(--panel);
-  padding: 20px;
-}
-.detail-image {
-  height: 240px;
-  background: linear-gradient(145deg, #281818, #101010);
-  display: grid;
-  place-items: center;
-  color: #684040;
-  font-size: 45px;
-  margin-bottom: 25px;
-  overflow: hidden;
-}
-.detail-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.detail-card h2 { font-size: 25px; text-transform: uppercase; }
-.detail-description {
-  color: var(--muted);
-  line-height: 1.8;
-  font-size: 12px;
-}
-.specs {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  margin-top: 25px;
-}
-.spec {
-  padding: 14px;
-  background: #0d0d0d;
-  border: 1px solid var(--line);
-}
-.spec small {
-  display: block;
-  color: var(--red);
-  font-size: 9px;
-  letter-spacing: 2px;
-  margin-bottom: 8px;
-}
-.spec span { font-size: 11px; }
-.network {
-  margin-top: 90px;
-  padding: 35px 15px;
-  text-align: center;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-  overflow: hidden;
-}
-.network-title {
-  font-size: 11px;
-  letter-spacing: 5px;
-  color: var(--red);
-}
-.orb {
-  width: 110px;
-  height: 110px;
-  margin: 28px auto;
-  border-radius: 50%;
-  border: 1px solid #873333;
-  box-shadow: 0 0 35px #a63d3d44, inset 0 0 30px #a63d3d33;
-  position: relative;
-  animation: pulse 3s ease-in-out infinite;
-}
-.orb::before, .orb::after {
-  content: "";
-  position: absolute;
-  inset: 12px -10px;
-  border: 1px solid #753333;
-  border-radius: 50%;
-  transform: rotate(35deg);
-}
-.orb::after { transform: rotate(-35deg); }
-@keyframes pulse {
-  0%, 100% { transform: scale(.94); }
-  50% { transform: scale(1.08); }
-}
-.wave {
-  height: 35px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-}
-.wave i {
-  display: block;
-  width: 3px;
-  height: 8px;
-  background: var(--red);
-  animation: wave .8s ease-in-out infinite alternate;
-}
-.wave i:nth-child(3n) { animation-delay: .2s; }
-.wave i:nth-child(2n) { animation-delay: .4s; }
-@keyframes wave {
-  to { height: 30px; opacity: .4; }
-}
-.status {
-  color: var(--muted);
-  font-size: 9px;
-  letter-spacing: 4px;
-  line-height: 2.5;
-}
-.music-controls {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 20px;
-}
-.music-controls button {
-  color: white;
-  background: transparent;
-  border: 1px solid var(--line);
-  padding: 10px 15px;
-  font-size: 9px;
-  letter-spacing: 2px;
-}
-.music-controls button:hover { border-color: var(--red); }
-footer {
-  padding: 35px 10px;
-  text-align: center;
-  color: var(--muted);
-  font-size: 9px;
-  letter-spacing: 3px;
-  position: relative;
-  z-index: 10;
-}
-@media (max-width: 520px) {
-  .category-grid, .product-grid { grid-template-columns: 1fr; }
-  main { padding-top: 45px; }
-  .detail-image { height: 190px; }
-}
-</style>
+        .splash-title { font-size: 64px; font-weight: 800; letter-spacing: 4px; color: var(--text); margin-bottom: 10px; z-index: 2; }
+        .splash-sub { font-size: 14px; letter-spacing: 8px; color: var(--accent); text-transform: uppercase; margin-bottom: 50px; z-index: 2; }
+
+        .btn-shop {
+            background: transparent; border: 2px solid var(--accent); color: var(--text);
+            padding: 15px 40px; font-size: 18px; font-weight: 600; letter-spacing: 2px;
+            cursor: pointer; z-index: 2; transition: 0.3s; font-family: inherit;
+        }
+        .btn-shop:hover { background: var(--accent); box-shadow: 0 0 20px var(--accent); }
+
+        /* 3D Geometric Shapes */
+        .geo-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: 1; perspective: 1000px; }
+        .geo-shape { position: absolute; border: 1px solid rgba(166, 61, 61, 0.3); width: 150px; height: 150px; animation: spin 10s infinite linear; }
+        .shape1 { top: 20%; left: 10%; animation-duration: 15s; }
+        .shape2 { bottom: 20%; right: 10%; animation-duration: 20s; border-radius: 50%; }
+        .shape3 { top: 60%; left: 80%; width: 80px; height: 80px; animation-duration: 8s; }
+        @keyframes spin { 0% { transform: rotateX(0) rotateY(0) rotateZ(0); } 100% { transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg); } }
+
+        /* System Text & Wave */
+        .sys-text { position: absolute; font-size: 10px; color: var(--accent); font-family: monospace; opacity: 0.5; letter-spacing: 2px; }
+        .sys-1 { top: 10%; right: 10%; }
+        .sys-2 { bottom: 10%; left: 10%; }
+
+        .sound-wave { position: absolute; bottom: 15%; display: flex; gap: 4px; height: 30px; align-items: center; z-index: 2; }
+        .bar { width: 3px; background: var(--accent); animation: wave 1s infinite ease-in-out alternate; }
+        .bar:nth-child(1) { height: 10px; animation-delay: 0.1s; }
+        .bar:nth-child(2) { height: 25px; animation-delay: 0.2s; }
+        .bar:nth-child(3) { height: 15px; animation-delay: 0.3s; }
+        .bar:nth-child(4) { height: 30px; animation-delay: 0.4s; }
+        .bar:nth-child(5) { height: 12px; animation-delay: 0.5s; }
+        @keyframes wave { 0% { transform: scaleY(0.5); } 100% { transform: scaleY(1.2); } }
+
+        /* --- SCREEN 2: MAIN SHOP --- */
+        #shop { display: none; opacity: 0; transition: opacity 0.5s; padding-bottom: 80px; }
+
+        header {
+            padding: 20px; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid var(--border); position: sticky; top: 0;
+            background: rgba(5, 5, 5, 0.9); backdrop-filter: blur(10px); z-index: 100;
+        }
+
+        .logo { font-size: 20px; font-weight: 800; letter-spacing: 2px; }
+        .socials a { color: var(--text-muted); text-decoration: none; margin-left: 15px; font-size: 12px; transition: 0.3s; }
+        .socials a:hover { color: var(--accent); }
+
+        .music-player {
+            background: var(--card-bg); padding: 10px 20px; display: flex; align-items: center;
+            justify-content: space-between; border-bottom: 1px solid var(--border); font-size: 12px;
+        }
+        .track-name { color: var(--text-muted); font-weight: 600; letter-spacing: 1px; }
+        .controls { display: flex; gap: 15px; }
+        .controls button { background: none; border: none; color: var(--text); cursor: pointer; font-size: 16px; transition: 0.3s; }
+        .controls button:hover { color: var(--accent); }
+
+        .categories-nav { display: flex; overflow-x: auto; padding: 15px 20px; gap: 10px; scrollbar-width: none; border-bottom: 1px solid var(--border); }
+        .categories-nav::-webkit-scrollbar { display: none; }
+        .cat-btn {
+            background: transparent; border: 1px solid var(--border); color: var(--text-muted);
+            padding: 8px 16px; border-radius: 20px; font-size: 12px; font-weight: 600;
+            white-space: nowrap; cursor: pointer; transition: 0.3s; font-family: inherit;
+        }
+        .cat-btn.active { border-color: var(--accent); color: var(--text); background: rgba(166, 61, 61, 0.1); }
+
+        .sub-categories { display: none; padding: 10px 20px; gap: 10px; background: #0a0a0a; }
+        .sub-categories.active { display: flex; }
+        .sub-btn { background: transparent; border: none; color: var(--text-muted); font-size: 12px; cursor: pointer; text-decoration: underline; font-family: inherit; }
+        .sub-btn.active { color: var(--accent); }
+
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 20px; }
+        @media (min-width: 768px) { .grid { grid-template-columns: repeat(4, 1fr); padding: 20px 40px; } .categories-nav { padding: 15px 40px; } }
+
+        .card {
+            background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px;
+            overflow: hidden; cursor: pointer; transition: transform 0.2s, border-color 0.2s;
+            display: flex; flex-direction: column;
+        }
+        .card:hover { transform: translateY(-5px); border-color: var(--accent); }
+
+        .card-img { width: 100%; aspect-ratio: 1; background: #1a1a1a; display: flex; align-items: center; justify-content: center; color: var(--border); font-size: 10px; position: relative; overflow: hidden; }
+        .card-img img { width: 100%; height: 100%; object-fit: cover; }
+
+        .card-content { padding: 12px; flex-grow: 1; display: flex; flex-direction: column; }
+        .card-title { font-size: 13px; font-weight: 600; margin-bottom: 6px; line-height: 1.2; text-transform: uppercase; }
+        
+        .card-meta { margin-top: auto; display: flex; justify-content: space-between; align-items: flex-end; }
+        .card-size { font-size: 10px; color: var(--text-muted); }
+        .card-price { font-size: 12px; color: var(--accent); font-weight: 800; }
+
+        /* --- SCREEN 3: PRODUCT PAGE --- */
+        #product-page { display: none; background: var(--bg); min-height: 100vh; padding: 20px; }
+        .back-btn { background: none; border: none; color: var(--text-muted); font-size: 14px; cursor: pointer; margin-bottom: 20px; display: flex; align-items: center; gap: 5px; font-family: inherit; }
+        .back-btn:hover { color: var(--text); }
+
+        .product-detail { max-width: 800px; margin: 0 auto; }
+        .detail-img { width: 100%; max-height: 400px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--border); margin-bottom: 20px; overflow: hidden; }
+        .detail-img img { width: 100%; height: 100%; object-fit: contain; }
+        
+        .detail-title { font-size: 24px; font-weight: 800; margin-bottom: 15px; text-transform: uppercase; }
+        .detail-info { font-size: 16px; color: var(--text); line-height: 1.6; margin-bottom: 20px; }
+        .detail-info span { color: var(--accent); font-weight: 600; }
+        
+        .detail-btn {
+            display: block; width: 100%; text-align: center; background: var(--accent);
+            color: white; text-decoration: none; padding: 15px; font-weight: 800; 
+            letter-spacing: 1px; font-size: 14px; border-radius: 4px;
+        }
+    </style>
 </head>
+<body>
 
-<body class="locked">
-
-<!-- ДОБАВЛЕНА 3D ГЕОМЕТРИКА -->
-<div class="geo-container">
-    <div class="geo-shape shape1"></div>
-    <div class="geo-shape shape2"></div>
-    <div class="geo-shape shape3"></div>
-    <div class="geo-shape shape4"></div>
-</div>
-
-<div id="intro">
-  <div class="intro-content">
-    <div class="intro-tag">INTERNATIONAL SHIP</div>
-    <h1 class="intro-logo">SLAYER.</h1>
-    <div class="intro-sub">BUILT IN DARKNESS.</div>
-    <button class="main-button" onclick="enterShop()">SHOP</button>
-  </div>
-</div>
-
-<header>
-  <div class="logo">SLAYER. SHOP</div>
-  <div class="header-label">INDEPENDENT PROJECT</div>
-</header>
-
-<main>
-  <section id="home-view">
-    <div class="hero">
-      <h1>BUILT IN<br>DARKNESS.</h1>
-      <p>SLAYER NETWORK / ACCESS GRANTED</p>
+    <!-- SPLASH SCREEN -->
+    <div id="splash">
+        <div class="geo-container">
+            <div class="geo-shape shape1"></div>
+            <div class="geo-shape shape2"></div>
+            <div class="geo-shape shape3"></div>
+        </div>
+        
+        <div class="sys-text sys-1">SYSTEM ONLINE</div>
+        <div class="sys-text sys-2">SLAYER NETWORK</div>
+        
+        <h1 class="splash-title">SLAYER</h1>
+        <div class="splash-sub">INTERNATIONAL SHIP</div>
+        <div class="splash-sub" style="font-size: 10px; color: #555; margin-bottom: 40px;">BUILT IN DARKNESS</div>
+        
+        <button class="btn-shop" onclick="enterShop()">SHOP</button>
+        
+        <div class="sound-wave">
+            <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+        </div>
     </div>
 
-    <div class="section-label">SELECT CATEGORY</div>
-    <div class="category-grid">
-      <button class="category" onclick="openCategory('1')">
-        <small>01 / CATEGORY</small><strong>LAB REAGENT</strong>
-      </button>
-      <button class="category" onclick="openCategory('2')">
-        <small>02 / CATEGORY</small><strong>DRUG</strong>
-      </button>
-      <button class="category" onclick="openCategory('3')">
-        <small>03 / CATEGORY</small><strong>PEPTIDE</strong>
-      </button>
-      <button class="category" onclick="openCategory('4')">
-        <small>04 / CATEGORY</small><strong>STEROID</strong>
-      </button>
-      <button class="category" onclick="openCategory('5')">
-        <small>05 / CATEGORY</small><strong>OTHER</strong>
-      </button>
+    <!-- MAIN SHOP -->
+    <div id="shop">
+        <header>
+            <div class="logo">SLAYER</div>
+            <div class="socials">
+                <a href="https://t.me/ShopSlayer" target="_blank">TG</a>
+                <a href="https://www.tiktok.com/@shopslayer333" target="_blank">TT</a>
+            </div>
+        </header>
+
+        <div class="music-player">
+            <div class="track-name">BLACK MAGIC — SINISTER SALEM</div>
+            <div class="controls">
+                <button id="play-btn" onclick="togglePlay()">▶</button>
+                <button onclick="toggleMute()" id="mute-btn">🔊</button>
+                <button onclick="replayTrack()">↺</button>
+            </div>
+            <audio id="bg-music" loop>
+                <source src="images/music.mp3" type="audio/mpeg">
+            </audio>
+        </div>
+
+        <div class="categories-nav" id="cat-nav">
+            <button class="cat-btn active" onclick="filterCategory('lab', this)">Lab Reagent</button>
+            <button class="cat-btn" onclick="filterCategory('drug', this)">Drug</button>
+            <button class="cat-btn" onclick="filterCategory('peptide', this)">Peptide</button>
+            <button class="cat-btn" onclick="filterCategory('steroid', this)">Steroid</button>
+            <button class="cat-btn" onclick="filterCategory('other', this)">Other</button>
+        </div>
+
+        <div class="sub-categories" id="steroid-subs">
+            <button class="sub-btn active" onclick="filterSteroid('oral', this)">Пероральная форма</button>
+            <button class="sub-btn" onclick="filterSteroid('inject', this)">Инъекционная форма</button>
+        </div>
+
+        <div class="grid" id="catalog"></div>
     </div>
-  </section>
 
-  <section id="catalog-view">
-    <div class="view-top">
-      <h2 id="catalog-title">CATEGORY</h2>
-      <button class="back-button" onclick="showCategories()">← BACK</button>
+    <!-- PRODUCT DETAIL PAGE -->
+    <div id="product-page">
+        <button class="back-btn" onclick="closeProduct()">← Назад в каталог</button>
+        <div class="product-detail">
+            <div class="detail-img" id="detail-img"></div>
+            <div class="detail-title" id="detail-title"></div>
+            <div class="detail-info" id="detail-info"></div>
+            <a href="https://t.me/sorrowmachine" target="_blank" class="detail-btn">СВЯЗАТЬСЯ С МЕНЕДЖЕРОМ ↗</a>
+        </div>
     </div>
-    <div id="branch-buttons" class="category-grid" style="display:none">
-      <button class="category" onclick="openBranch('left')">
-        <small>SECTION A</small><strong>ПЕРОРАЛЬНАЯ ФОРМА</strong>
-      </button>
-      <button class="category" onclick="openBranch('right')">
-        <small>SECTION B</small><strong>ИНЪЕКЦИОННАЯ ФОРМА</strong>
-      </button>
-    </div>
-    <div class="product-grid" id="product-grid"></div>
-  </section>
 
-  <section id="detail-view">
-    <div class="view-top">
-      <h2>ITEM DETAILS</h2>
-      <button class="back-button" onclick="closeDetails()">← BACK</button>
-    </div>
-    <div class="detail-card">
-      <div class="detail-image" id="detail-image">✦</div>
-      <h2 id="detail-title">Название</h2>
-      <p class="detail-description" id="detail-description">Описание</p>
-      <div class="specs" id="detail-specs"></div>
-    </div>
-  </section>
+    <script>
+        // --- ДАННЫЕ (ВСТАВЛЕНЫ ВСЕ ТОВАРЫ ИЗ ТВОЕГО СТАРОГО HTML) ---
+        const products = [
+            // 1. LAB REAGENT (10)
+            { id: 'lab-1', category: 'lab', title: 'Erdafitinib', size: '1g', price: '13.500₽', img: '' },
+            { id: 'lab-2', category: 'lab', title: 'Infigratinib', size: '1g', price: '18.500₽', img: '' },
+            { id: 'lab-3', category: 'lab', title: 'WAY316606', size: '1g', price: '12.500₽', img: '' },
+            { id: 'lab-4', category: 'lab', title: 'Tyra300', size: '1g', price: '20.000₽', img: '' },
+            { id: 'lab-5', category: 'lab', title: 'KY19382', size: '1g', price: 'Нет в наличии', img: '' },
+            { id: 'lab-6', category: 'lab', title: 'Odanacitib', size: '1g', price: '35.000₽', img: '' },
+            { id: 'lab-7', category: 'lab', title: 'WAY262611', size: '1g', price: '35.000₽', img: '' },
+            { id: 'lab-8', category: 'lab', title: 'SAG21K', size: '100mg', price: '45.000₽', img: '' },
+            { id: 'lab-9', category: 'lab', title: 'RU58841', size: '10g', price: '5.000₽', img: '' },
+            { id: 'lab-10', category: 'lab', title: 'Minoxidil', size: '500mg', price: '2.500₽', img: '' },
 
-  <section class="network">
-    <div class="network-title">SLAYER NETWORK</div>
-    <div class="orb"></div>
-    <div class="wave" aria-hidden="true">
-      <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-      <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-      <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-    </div>
-    <div class="status">SYSTEM ONLINE<br>ACCESS GRANTED</div>
-    <div class="music-controls">
-      <button id="play-button" onclick="toggleMusic()">PLAY MUSIC</button>
-      <button id="mute-button" onclick="toggleMute()">MUTE</button>
-    </div>
-    <div class="status" style="margin-top:12px">BLACK MAGIC — SINISTER SALEM</div>
-  </section>
-</main>
+            // 2. DRUG (4)
+            { id: 'drug-1', category: 'drug', title: 'Anastrazole', size: '80pills', price: '2.500₽', img: '' },
+            { id: 'drug-2', category: 'drug', title: 'Letrozole', size: '40pills', price: '3.000₽', img: '' },
+            { id: 'drug-3', category: 'drug', title: 'Examestane', size: '40pills', price: '3.000₽', img: '' },
+            { id: 'drug-4', category: 'drug', title: 'Minoxidil', size: '100pills', price: '2.000₽', img: '' },
 
-<footer>SLAYER SHOP © 2026</footer>
+            // 3. PEPTIDE (15)
+            { id: 'pep-1', category: 'peptide', title: 'AOD9604', size: '5vial of 5mg', price: '4.500₽', img: '' },
+            { id: 'pep-2', category: 'peptide', title: 'GHK-Cu', size: '10vial of 50mg', price: '4.500₽', img: '' },
+            { id: 'pep-3', category: 'peptide', title: 'Melatonan-II', size: '10vial of 10mg', price: '15.000₽', img: '' },
+            { id: 'pep-4', category: 'peptide', title: 'Ipamorelin', size: '10vial of 5mg', price: '12.500₽', img: '' },
+            { id: 'pep-5', category: 'peptide', title: 'HCG', size: '10vial of 1000UI', price: '5.000₽', img: '' },
+            { id: 'pep-6', category: 'peptide', title: 'Retatrutide', size: '1 vial of 30mg', price: '3.000₽', img: '' },
+            { id: 'pep-7', category: 'peptide', title: 'MOTC-S', size: '1 vial of 10mg', price: '2.000₽', img: '' },
+            { id: 'pep-8', category: 'peptide', title: 'PT141', size: '1vial of 10mg', price: 'Нет в наличии', img: '' },
+            { id: 'pep-9', category: 'peptide', title: 'Epitalon', size: '1vial of 10mg', price: '2.500₽', img: '' },
+            { id: 'pep-10', category: 'peptide', title: 'GHRP-2', size: '5vial of 5mg', price: '3.000₽', img: '' },
+            { id: 'pep-11', category: 'peptide', title: 'GHRP-6', size: '5vial of 5mg', price: '3.000₽', img: '' },
+            { id: 'pep-12', category: 'peptide', title: 'CJC1295', size: '1vial of 10mg', price: '2.500₽', img: '' },
+            { id: 'pep-13', category: 'peptide', title: 'Glow', size: '1vial of 70mg', price: '2.500₽', img: '' },
+            { id: 'pep-14', category: 'peptide', title: 'TB-500', size: '1vial of 10mg', price: '2.000₽', img: '' },
+            { id: 'pep-15', category: 'peptide', title: 'BPC-157', size: '1vial of 10mg', price: '2.000₽', img: '' },
 
-<audio id="slayerMusic" src="images/music.mp3" loop preload="none"></audio>
+            // 4a. STEROID ORAL (4)
+            { id: 'steroidOral-1', category: 'steroidOral', title: 'Oxandrolon', size: '100pills', price: '4.500₽', img: '' },
+            { id: 'steroidOral-2', category: 'steroidOral', title: 'Metan', size: '100pills', price: '3.000₽', img: '' },
+            { id: 'steroidOral-3', category: 'steroidOral', title: 'Oxymetholone', size: '100pills', price: '5.000₽', img: '' },
+            { id: 'steroidOral-4', category: 'steroidOral', title: 'Stanozolol', size: '100pills', price: '3.000₽', img: '' },
 
-<script>
-const catalog = {
-  "1": [
-    { title: "erdafitinib", subtitle: "1g", description: "13.500₽", image: "", specs: ["1g", "13.500₽", "", ""] },
-    { title: "infigratinib", subtitle: "1g", description: "18.500₽", image: "", specs: ["1g", "18.500₽", "", ""] },
-    { title: "way316606", subtitle: "1g", description: "12.500₽", image: "", specs: ["1g", "12.500₽", "", ""] },
-    { title: "Tyra300", subtitle: "1g", description: "20.000₽", image: "", specs: ["1g", "20.000₽", "", ""] },
-    { title: "ky19382", subtitle: "1g", description: "не в наличии", image: "", specs: ["1g", "не в наличии", "", ""] },
-    { title: "odanacitib", subtitle: "1g", description: "35.000₽", image: "", specs: ["1g", "35.000₽", "", ""] },
-    { title: "way262611", subtitle: "1g", description: "35.000₽", image: "", specs: ["1g", "35.000₽", "", ""] },
-    { title: "sag21k", subtitle: "100mg", description: "45.000₽", image: "", specs: ["100mg", "45.000₽", "", ""] },
-    { title: "ru58841", subtitle: "10g", description: "5000₽", image: "", specs: ["10g", "5000₽", "", ""] },
-    { title: "minoxidil", subtitle: "500mg", description: "2500₽", image: "", specs: ["500mg", "2500₽", "", ""] }
-  ],
-  "2": [
-    { title: "anastrazole", subtitle: "80pills", description: "2500₽", image: "", specs: ["80pills", "2500₽", "", ""] },
-    { title: "letrozope", subtitle: "40pills", description: "3000₽", image: "", specs: ["40pills", "3000₽", "", ""] },
-    { title: "examestane", subtitle: "40pills", description: "3000₽", image: "", specs: ["40pills", "3000₽", "", ""] },
-    { title: "minoxidil", subtitle: "100pills", description: "2000₽", image: "", specs: ["100pills", "2000₽", "", ""] }
-  ],
-  "3": [
-    { title: "Aod9604", subtitle: "5vial of 5mg", description: "4500₽", image: "", specs: ["5vial of 5mg", "4500₽", "", ""] },
-    { title: "Ghk-Cu", subtitle: "10 vial of 50mg", description: "4500₽", image: "", specs: ["10 vial of 50mg", "4500₽", "", ""] },
-    { title: "Melatonan-II", subtitle: "10vial of 10mg", description: "15.000₽", image: "", specs: ["10vial of 10mg", "15.000₽", "", ""] },
-    { title: "Ipamorelin", subtitle: "10vial of 5mg", description: "12.500₽", image: "", specs: ["10vial of 5mg", "12.500₽", "", ""] },
-    { title: "HCG", subtitle: "10vial of 1000UI", description: "5000₽", image: "", specs: ["10vial of 1000UI", "5000₽", "", ""] },
-    { title: "Retatrutide", subtitle: "1 vial of 30mg", description: "3000₽", image: "", specs: ["1 vial of 30mg", "3000₽", "", ""] },
-    { title: "motc s", subtitle: "1 vial of 10mg", description: "2000₽", image: "", specs: ["1 vial of 10mg", "2000₽", "", ""] },
-    { title: "pt141", subtitle: "1vial of 10mg", description: "нету в наличии", image: "", specs: ["1vial of 10mg", "нету в наличии", "", ""] },
-    { title: "Epitalon", subtitle: "1vial of 10mg", description: "2500₽", image: "", specs: ["1vial of 10mg", "2500₽", "", ""] },
-    { title: "Ghrp-2", subtitle: "5vial of 5mg", description: "3000₽", image: "", specs: ["5vial of 5mg", "3000₽", "", ""] },
-    { title: "Ghrp-6", subtitle: "5vial of 5mg", description: "3000₽", image: "", specs: ["5vial of 5mg", "3000₽", "", ""] },
-    { title: "cjc1295", subtitle: "1vial of 10mg", description: "2500₽", image: "", specs: ["1vial of 10mg", "2500₽", "", ""] },
-    { title: "Glow", subtitle: "1vial of 70mg", description: "2500₽", image: "", specs: ["1vial of 70mg", "2500₽", "", ""] },
-    { title: "Tb-500", subtitle: "1vial of 10mg", description: "2000₽", image: "", specs: ["1vial of 10mg", "2000₽", "", ""] },
-    { title: "Bpc-157", subtitle: "1vial of 10mg", description: "2000₽", image: "", specs: ["1vial of 10mg", "2000₽", "", ""] }
-  ],
-  "left": [
-    { title: "Oxandrolon", subtitle: "100pills", description: "4500₽", image: "", specs: ["100pills", "4500₽", "", ""] },
-    { title: "Metan", subtitle: "100pills", description: "3000₽", image: "", specs: ["100pills", "3000₽", "", ""] },
-    { title: "Oxymetholone", subtitle: "100pills", description: "5000₽", image: "", specs: ["100pills", "5000₽", "", ""] },
-    { title: "stanozolol", subtitle: "100pills", description: "3000₽", image: "", specs: ["100pills", "3000₽", "", ""] }
-  ],
-  "right": [
-    { title: "Trenbolone enanthate", subtitle: "10ml", description: "5000₽", image: "", specs: ["10ml", "5000₽", "", ""] },
-    { title: "Trenbolone acetate", subtitle: "10ml", description: "4500₽", image: "", specs: ["10ml", "4500₽", "", ""] },
-    { title: "Trenbolone gexa", subtitle: "10ml", description: "8000₽", image: "", specs: ["10ml", "8000₽", "", ""] },
-    { title: "Tri-tren", subtitle: "10ml", description: "5500₽", image: "", specs: ["10ml", "5500₽", "", ""] },
-    { title: "Testosterone enanthate", subtitle: "10ml", description: "5000₽", image: "", specs: ["10ml", "5000₽", "", ""] },
-    { title: "Testosterone Acetate", subtitle: "10ml", description: "4500₽", image: "", specs: ["10ml", "4500₽", "", ""] },
-    { title: "Testosterone cypionate", subtitle: "10ml", description: "5000₽", image: "", specs: ["10ml", "5000₽", "", ""] },
-    { title: "Testosterone phenilpropionate", subtitle: "30ml", description: "5000₽", image: "", specs: ["30ml", "5000₽", "", ""] },
-    { title: "Testosterone propionate", subtitle: "30ml", description: "5500₽", image: "", specs: ["30ml", "5500₽", "", ""] },
-    { title: "Sustanone", subtitle: "10ml", description: "3000₽", image: "", specs: ["10ml", "3000₽", "", ""] },
-    { title: "Mtren", subtitle: "10ml", description: "3500₽", image: "", specs: ["10ml", "3500₽", "", ""] },
-    { title: "Decanoate phenylpropionate", subtitle: "10ml", description: "3500₽", image: "", specs: ["10ml", "3500₽", "", ""] },
-    { title: "Nandrolone decanoate", subtitle: "10ml", description: "4000₽", image: "", specs: ["10ml", "4000₽", "", ""] },
-    { title: "Oxymetholone", subtitle: "10ml", description: "3500₽", image: "", specs: ["10ml", "3500₽", "", ""] },
-    { title: "Boldenone", subtitle: "10ml", description: "4500₽", image: "", specs: ["10ml", "4500₽", "", ""] },
-    { title: "Stanozol", subtitle: "10ml", description: "2500₽", image: "", specs: ["10ml", "2500₽", "", ""] },
-    { title: "Masteron", subtitle: "10ml", description: "5500₽", image: "", specs: ["10ml", "5500₽", "", ""] },
-    { title: "methenolone enanthate", subtitle: "10ml", description: "6500₽", image: "", specs: ["10ml", "6500₽", "", ""] },
-    { title: "nandrolone phenylpropionate", subtitle: "10ml", description: "3500₽", image: "", specs: ["10ml", "3500₽", "", ""] },
-    { title: "metan", subtitle: "10ml", description: "3000₽", image: "", specs: ["10ml", "3000₽", "", ""] }
-  ],
-  "5": [
-    { title: "Aqualyx", subtitle: "5vial of 10ml", description: "4500₽", image: "", specs: ["5vial of 10ml", "4500₽", "", ""] },
-    { title: "bacteriostatic water", subtitle: "30ml", description: "2500₽", image: "", specs: ["30ml", "2500₽", "", ""] },
-    { title: "Azealic gel", subtitle: "20%", description: "2000₽", image: "", specs: ["20%", "2000₽", "", ""] },
-    { title: "hydrocortisone", subtitle: "4%", description: "1500₽", image: "", specs: ["4%", "1500₽", "", ""] },
-    { title: "инсулиновые шприцы", subtitle: "100pcs", description: "2500₽", image: "", specs: ["100pcs", "2500₽", "", ""] },
-    { title: "minoxidil whey", subtitle: "30ml", description: "2000₽", image: "", specs: ["30ml", "2000₽", "", ""] },
-    { title: "ru58841 whey", subtitle: "30ml", description: "2000", image: "", specs: ["30ml", "2000", "", ""] },
-    { title: "pp405 whey", subtitle: "30ml", description: "2000₽", image: "", specs: ["30ml", "2000₽", "", ""] },
-    { title: "jw0061", subtitle: "30ml", description: "2000₽", image: "", specs: ["30ml", "2000₽", "", ""] },
-    { title: "tretinoin cream", subtitle: "0.025%—0.1%", description: "1500₽", image: "", specs: ["0.025%—0.1%", "1500₽", "", ""] },
-    { title: "tretinoin gel", subtitle: "0.025%—0.1%", description: "2000₽", image: "", specs: ["0.025%—0.1%", "2000₽", "", ""] }
-  ]
-};
+            // 4b. STEROID INJECT (20)
+            { id: 'steroidInject-1', category: 'steroidInject', title: 'Trenbolone enanthate', size: '10ml', price: '5.000₽', img: '' },
+            { id: 'steroidInject-2', category: 'steroidInject', title: 'Trenbolone acetate', size: '10ml', price: '4.500₽', img: '' },
+            { id: 'steroidInject-3', category: 'steroidInject', title: 'Trenbolone gexa', size: '10ml', price: '8.000₽', img: '' },
+            { id: 'steroidInject-4', category: 'steroidInject', title: 'Tri-tren', size: '10ml', price: '5.500₽', img: '' },
+            { id: 'steroidInject-5', category: 'steroidInject', title: 'Testosterone enanthate', size: '10ml', price: '5.000₽', img: '' },
+            { id: 'steroidInject-6', category: 'steroidInject', title: 'Testosterone Acetate', size: '10ml', price: '4.500₽', img: '' },
+            { id: 'steroidInject-7', category: 'steroidInject', title: 'Testosterone cypionate', size: '10ml', price: '5.000₽', img: '' },
+            { id: 'steroidInject-8', category: 'steroidInject', title: 'Testosterone phenilpropionate', size: '30ml', price: '5.000₽', img: '' },
+            { id: 'steroidInject-9', category: 'steroidInject', title: 'Testosterone propionate', size: '30ml', price: '5.500₽', img: '' },
+            { id: 'steroidInject-10', category: 'steroidInject', title: 'Sustanone', size: '10ml', price: '3.000₽', img: '' },
+            { id: 'steroidInject-11', category: 'steroidInject', title: 'Mtren', size: '10ml', price: '3.500₽', img: '' },
+            { id: 'steroidInject-12', category: 'steroidInject', title: 'Decanoate phenylpropionate', size: '10ml', price: '3.500₽', img: '' },
+            { id: 'steroidInject-13', category: 'steroidInject', title: 'Nandrolone decanoate', size: '10ml', price: '4.000₽', img: '' },
+            { id: 'steroidInject-14', category: 'steroidInject', title: 'Oxymetholone', size: '10ml', price: '3.500₽', img: '' },
+            { id: 'steroidInject-15', category: 'steroidInject', title: 'Boldenone', size: '10ml', price: '4.500₽', img: '' },
+            { id: 'steroidInject-16', category: 'steroidInject', title: 'Stanozol', size: '10ml', price: '2.500₽', img: '' },
+            { id: 'steroidInject-17', category: 'steroidInject', title: 'Masteron', size: '10ml', price: '5.500₽', img: '' },
+            { id: 'steroidInject-18', category: 'steroidInject', title: 'Methenolone enanthate', size: '10ml', price: '6.500₽', img: '' },
+            { id: 'steroidInject-19', category: 'steroidInject', title: 'Nandrolone phenylpropionate', size: '10ml', price: '3.500₽', img: '' },
+            { id: 'steroidInject-20', category: 'steroidInject', title: 'Metan', size: '10ml', price: '3.000₽', img: '' },
 
-let currentCategory = "1";
-let currentItems = [];
+            // 5. OTHER (11)
+            { id: 'other-1', category: 'other', title: 'Aqualyx', size: '5vial of 10ml', price: '4.500₽', img: '' },
+            { id: 'other-2', category: 'other', title: 'Bacteriostatic water', size: '30ml', price: '2.500₽', img: '' },
+            { id: 'other-3', category: 'other', title: 'Azealic gel', size: '20%', price: '2.000₽', img: '' },
+            { id: 'other-4', category: 'other', title: 'Hydrocortisone', size: '4%', price: '1.500₽', img: '' },
+            { id: 'other-5', category: 'other', title: 'Инсулиновые шприцы', size: '100pcs', price: '2.500₽', img: '' },
+            { id: 'other-6', category: 'other', title: 'Minoxidil whey', size: '30ml', price: '2.000₽', img: '' },
+            { id: 'other-7', category: 'other', title: 'RU58841 whey', size: '30ml', price: '2.000₽', img: '' },
+            { id: 'other-8', category: 'other', title: 'PP405 whey', size: '30ml', price: '2.000₽', img: '' },
+            { id: 'other-9', category: 'other', title: 'JW0061', size: '30ml', price: '2.000₽', img: '' },
+            { id: 'other-10', category: 'other', title: 'Tretinoin cream', size: '0.025%—0.1%', price: '1.500₽', img: '' },
+            { id: 'other-11', category: 'other', title: 'Tretinoin gel', size: '0.025%—0.1%', price: '2.000₽', img: '' }
+        ];
 
-function enterShop() {
-  document.getElementById("intro").style.display = "none";
-  document.body.classList.remove("locked");
-  startMusic();
-}
+        // --- ЛОГИКА ---
+        const splash = document.getElementById('splash');
+        const shop = document.getElementById('shop');
+        const catalog = document.getElementById('catalog');
+        const steroidSubs = document.getElementById('steroid-subs');
+        const productPage = document.getElementById('product-page');
+        
+        function enterShop() {
+            const audio = document.getElementById('bg-music');
+            if (audio) {
+                audio.play().catch(e => console.log('Автовоспроизведение заблокировано.'));
+            }
+            splash.style.opacity = '0';
+            setTimeout(() => {
+                splash.style.display = 'none';
+                shop.style.display = 'block';
+                setTimeout(() => shop.style.opacity = '1', 50);
+                renderCatalog('lab');
+            }, 800);
+        }
 
-function showView(id) {
-  ["home-view", "catalog-view", "detail-view"].forEach(view => {
-    document.getElementById(view).style.display = view === id ? "block" : "none";
-  });
-}
+        function filterCategory(cat, btn) {
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
 
-function openCategory(category) {
-  currentCategory = category;
-  showView("catalog-view");
+            if (cat === 'steroid') {
+                steroidSubs.classList.add('active');
+                document.querySelectorAll('.sub-btn')[0].classList.add('active');
+                document.querySelectorAll('.sub-btn')[1].classList.remove('active');
+                renderCatalog('steroidOral');
+            } else {
+                steroidSubs.classList.remove('active');
+                renderCatalog(cat);
+            }
+        }
 
-  const branches = document.getElementById("branch-buttons");
-  const grid = document.getElementById("product-grid");
+        function filterSteroid(subCat, btn) {
+            document.querySelectorAll('.sub-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderCatalog(subCat === 'oral' ? 'steroidOral' : 'steroidInject');
+        }
 
-  if (category === "4") {
-    document.getElementById("catalog-title").textContent = "STEROID";
-    branches.style.display = "grid";
-    grid.style.display = "none";
-    return;
-  }
+        function renderCatalog(categoryKey) {
+            catalog.innerHTML = '';
+            const filtered = products.filter(p => p.category === categoryKey);
 
-  branches.style.display = "none";
-  grid.style.display = "grid";
-  document.getElementById("catalog-title").textContent = 
-    category === "1" ? "LAB REAGENT" : 
-    category === "2" ? "DRUG" : 
-    category === "3" ? "PEPTIDE" : 
-    category === "5" ? "OTHER" : "CATEGORY " + category;
-  renderProducts(catalog[category] || []);
-}
+            filtered.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.onclick = () => openProduct(p.id);
 
-function openBranch(branch) {
-  currentCategory = branch;
-  document.getElementById("catalog-title").textContent =
-    branch === "left" ? "ПЕРОРАЛЬНАЯ ФОРМА" : "ИНЪЕКЦИОННАЯ ФОРМА";
-  document.getElementById("branch-buttons").style.display = "none";
-  document.getElementById("product-grid").style.display = "grid";
-  renderProducts(catalog[branch] || []);
-}
+                const imgContent = p.img ? `<img src="${p.img}" alt="${p.title}">` : 'NO IMAGE';
 
-function renderProducts(items) {
-  currentItems = items;
-  const grid = document.getElementById("product-grid");
-  grid.innerHTML = "";
+                card.innerHTML = `
+                    <div class="card-img">${imgContent}</div>
+                    <div class="card-content">
+                        <div class="card-title">${p.title}</div>
+                        <div class="card-meta">
+                            <span class="card-size">${p.size}</span>
+                            <span class="card-price">${p.price}</span>
+                        </div>
+                    </div>
+                `;
+                catalog.appendChild(card);
+            });
+        }
 
-  items.forEach((item, index) => {
-    const card = document.createElement("div");
-    card.className = "product";
+        function openProduct(id) {
+            const product = products.find(p => p.id === id);
+            if (!product) return;
 
-    const image = document.createElement("div");
-    image.className = "product-image";
+            const imgContainer = document.getElementById('detail-img');
+            imgContainer.innerHTML = product.img ? `<img src="${product.img}" alt="${product.title}">` : 'NO IMAGE';
 
-    if (item.image) {
-      const img = document.createElement("img");
-      img.src = item.image;
-      img.alt = item.title;
-      image.appendChild(img);
-    } else {
-      image.textContent = "✦";
-    }
+            document.getElementById('detail-title').innerText = product.title;
+            
+            document.getElementById('detail-info').innerHTML = `
+                Объём: <span>${product.size}</span><br><br>
+                Цена: <span>${product.price}</span>
+            `;
 
-    const title = document.createElement("h3");
-    title.textContent = item.title;
+            shop.style.display = 'none';
+            productPage.style.display = 'block';
+            window.scrollTo(0,0);
+        }
 
-    const subtitle = document.createElement("p");
-    subtitle.textContent = item.subtitle + " | " + item.description;
+        function closeProduct() {
+            productPage.style.display = 'none';
+            shop.style.display = 'block';
+        }
 
-    const link = document.createElement("div");
-    link.className = "product-link";
-    link.textContent = "VIEW DETAILS →";
+        // --- МУЗЫКА ---
+        const audio = document.getElementById('bg-music');
+        const playBtn = document.getElementById('play-btn');
+        let isPlaying = false;
 
-    card.append(image, title, subtitle, link);
-    card.addEventListener("click", () => openDetails(index));
-    grid.appendChild(card);
-  });
-}
+        function updatePlayState(state) {
+            isPlaying = state;
+            playBtn.innerText = isPlaying ? '⏸' : '▶';
+        }
 
-function openDetails(index) {
-  const item = currentItems[index];
-  if (!item) return;
+        function togglePlay() {
+            if (isPlaying) {
+                audio.pause();
+                updatePlayState(false);
+            } else {
+                audio.play().then(() => {
+                    updatePlayState(true);
+                }).catch(e => console.log(e));
+            }
+        }
 
-  document.getElementById("detail-title").textContent = item.title;
-  document.getElementById("detail-description").textContent = "Объем: " + item.subtitle + " | Цена: " + item.description;
+        function toggleMute() {
+            audio.muted = !audio.muted;
+            document.getElementById('mute-btn').innerText = audio.muted ? '🔇' : '🔊';
+        }
 
-  const image = document.getElementById("detail-image");
-  image.innerHTML = "";
-
-  if (item.image) {
-    const img = document.createElement("img");
-    img.src = item.image;
-    img.alt = item.title;
-    image.appendChild(img);
-  } else {
-    image.textContent = "✦";
-  }
-
-  const specs = document.getElementById("detail-specs");
-  specs.innerHTML = "";
-
-  item.specs.forEach((value, index) => {
-    const block = document.createElement("div");
-    block.className = "spec";
-
-    const label = document.createElement("small");
-    label.textContent = index === 0 ? "ОБЪЕМ" : index === 1 ? "ЦЕНА" : "PARAMETER " + (index + 1);
-
-    const text = document.createElement("span");
-    text.textContent = value;
-
-    block.append(label, text);
-    specs.appendChild(block);
-  });
-
-  showView("detail-view");
-}
-
-function closeDetails() {
-  showView("catalog-view");
-}
-
-function showCategories() {
-  showView("home-view");
-}
-
-const music = document.getElementById("slayerMusic");
-
-function startMusic() {
-  music.play().then(() => {
-    document.getElementById("play-button").textContent = "PAUSE MUSIC";
-  }).catch(() => {
-    document.getElementById("play-button").textContent = "PLAY MUSIC";
-  });
-}
-
-function toggleMusic() {
-  if (music.paused) {
-    startMusic();
-  } else {
-    music.pause();
-    document.getElementById("play-button").textContent = "PLAY MUSIC";
-  }
-}
-
-function toggleMute() {
-  music.muted = !music.muted;
-  document.getElementById("mute-button").textContent =
-    music.muted ? "UNMUTE" : "MUTE";
-}
-</script>
+        function replayTrack() {
+            audio.currentTime = 0;
+            if (!isPlaying) togglePlay();
+        }
+        
+        audio.onended = function() {
+            updatePlayState(false);
+        }
+    </script>
 </body>
 </html>
