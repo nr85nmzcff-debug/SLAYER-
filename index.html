@@ -1,828 +1,664 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SLAYER SHOP</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Slayer Shop</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+ --bg:#08090a;--panel:#121518;--panel2:#1b2024;
+ --silver:#c8cdd2;--muted:#92999f;--white:#f4f5f6;
+ --line:rgba(255,255,255,.1);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--white);font-family:Manrope,sans-serif}
+button{font:inherit;cursor:pointer}
+.hidden{display:none!important}
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+.intro{
+ position:fixed;inset:0;z-index:1000;
+ display:flex;align-items:center;justify-content:center;
+ text-align:center;padding:25px;
+ background:radial-gradient(ellipse at center,#252b30,#101315 48%,#050606)
+}
+.intro-content{max-width:620px}
+.intro-logo{font:600 clamp(50px,11vw,95px) Oswald;letter-spacing:5px;margin:0}
+.intro-logo span{color:var(--silver)}
+.intro-subtitle{font-size:12px;letter-spacing:4px;color:#aeb5bb;margin-top:12px}
+.intro-description{font-size:13px;line-height:2;color:#aab0b5;margin:35px auto;max-width:480px}
+.primary-btn{padding:16px 55px;border:1px solid var(--silver);background:var(--silver);color:#08090a;font-weight:800;letter-spacing:3px}
+.primary-btn:hover{background:transparent;color:white}
 
-    body {
-      background: #0b0b0b;
-      color: #f3f1ef;
-      font-family: 'Montserrat', sans-serif;
-      min-height: 100vh;
-    }
+#store{min-height:100vh}
+header{
+ height:76px;padding:0 7%;display:flex;align-items:center;
+ justify-content:space-between;border-bottom:1px solid var(--line);
+ position:sticky;top:0;z-index:20;background:rgba(8,9,10,.96);
+ backdrop-filter:blur(12px)
+}
+.brand{font:500 27px Oswald;letter-spacing:2px}
+.brand span{color:var(--silver)}
+.header-contact{color:var(--silver);text-decoration:none;border:1px solid var(--line);padding:10px 16px;font-size:10px;letter-spacing:1px}
 
-    body.locked {
-      overflow: hidden;
-    }
+.hero{text-align:center;padding:85px 20px 65px;background:linear-gradient(180deg,#151a1e,#08090a)}
+.hero-label{font-size:10px;letter-spacing:5px;color:var(--muted)}
+.hero h1{font:500 clamp(40px,7vw,68px) Oswald;letter-spacing:3px;margin:16px 0}
+.hero p{max-width:570px;margin:auto;color:#a5abb0;font-size:13px;line-height:2}
 
-    button {
-      font-family: inherit;
-      cursor: pointer;
-    }
+.container{width:min(1120px,90%);margin:auto}
+.section-heading{margin:55px 0 28px}
+.section-heading small{color:var(--muted);letter-spacing:3px;font-size:10px}
+.section-heading h2{font:500 34px Oswald;margin:8px 0;letter-spacing:1px}
+.section-heading p{font-size:12px;color:var(--muted)}
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+.category-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-bottom:75px}
+.category-card,.branch-card{
+ min-height:155px;padding:24px;text-align:left;color:white;
+ background:linear-gradient(145deg,#1c2226,#101315);
+ border:1px solid var(--line);position:relative;transition:.25s;width:100%
+}
+.category-card:hover,.branch-card:hover{border-color:#b5bdc4;transform:translateY(-4px)}
+.category-number{font:13px Oswald;color:#858d94;letter-spacing:3px}
+.category-name{display:block;font:25px Oswald;margin-top:17px}
+.category-count{display:block;font-size:10px;color:#858d94;margin-top:7px}
+.category-arrow{position:absolute;right:22px;bottom:20px;color:var(--silver);font-size:22px}
 
-    .container {
-      width: min(900px, 90%);
-      margin: auto;
-    }
+.branch-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px;margin-bottom:75px}
+.branch-card{min-height:180px}
+.branch-name{display:block;font:27px Oswald;margin-top:22px}
+.branch-count{display:block;font-size:10px;color:#858d94;margin-top:9px}
 
-    /* ПЕРВЫЙ ЭКРАН */
+.back-btn{padding:11px 17px;background:transparent;border:1px solid var(--line);color:var(--silver);font-size:11px;letter-spacing:1px;margin-bottom:25px}
+.products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}
+.product-card{padding:12px;background:var(--panel);border:1px solid var(--line);transition:.2s}
+.product-card:hover{border-color:#818b93;transform:translateY(-3px)}
+.product-open{display:block;width:100%;padding:0;border:0;background:none;color:white;text-align:left}
+.product-image{display:block;width:100%;aspect-ratio:1;object-fit:cover;background:#22282d}
+.product-name{display:block;padding:14px 3px 5px;font:19px Oswald;min-height:45px}
+.product-contact{display:block;text-align:center;text-decoration:none;border:1px solid #505960;color:#d5d9dc;padding:11px 4px;margin-top:8px;font-size:10px;letter-spacing:1px}
+.product-contact:hover{background:var(--silver);color:#08090a}
 
-    .intro {
-      position: fixed;
-      inset: 0;
-      z-index: 1000;
-      background: #080808;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 25px;
-      transition: opacity .5s, visibility .5s;
-    }
+.modal{display:none;position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.9);padding:20px;overflow-y:auto;align-items:center;justify-content:center}
+.modal.active{display:flex}
+.modal-content{width:min(760px,100%);background:#111619;border:1px solid #424a50;padding:27px;position:relative;margin:auto}
+.close-modal{position:absolute;right:17px;top:10px;background:none;border:0;color:white;font-size:30px}
+.modal-title{font:32px Oswald;margin:0 35px 20px 0}
+.modal-gallery{display:flex;gap:14px;margin:20px 0}
+.gallery-item{width:115px}
+.gallery-item img{width:115px;height:115px;object-fit:cover;background:#252b30;border:1px solid var(--line);cursor:zoom-in}
+.detail-label{font-size:10px;color:#9ba3aa;letter-spacing:2px;margin:22px 0 10px;text-transform:uppercase}
+.modal-description{font-size:13px;line-height:1.9;color:#b5bbc0;white-space:pre-wrap}
+.form-buttons,.volume-buttons{display:flex;flex-wrap:wrap;gap:9px}
+.choice-btn{padding:11px 16px;background:#1c2226;border:1px solid #485159;color:#e0e3e5;font-size:12px}
+.choice-btn.active,.choice-btn:hover{background:var(--silver);color:#08090a;border-color:var(--silver)}
+.price-display{font:27px Oswald;margin:18px 0}
+.modal-contact{display:block;text-align:center;text-decoration:none;background:var(--silver);color:#08090a;padding:15px;margin-top:22px;font-size:11px;font-weight:800;letter-spacing:2px}
 
-    .intro.hidden {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
+.image-view{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.96);display:none;align-items:center;justify-content:center;padding:20px}
+.image-view.active{display:flex}
+.image-view img{max-width:90vw;max-height:85vh;object-fit:contain}
+.image-view button{position:absolute;right:25px;top:15px;background:none;border:0;color:white;font-size:35px}
 
-    .intro-logo {
-      font-size: clamp(48px, 12vw, 90px);
-      font-weight: 900;
-      letter-spacing: -5px;
-      line-height: .9;
-    }
+/* НОВЫЙ 3D ОБЪЕКТ */
+.cube-section{padding:60px 20px 80px;text-align:center;background:linear-gradient(180deg,#08090a,#151a1e);border-top:1px solid var(--line)}
+.object-scene{width:140px;height:140px;margin:45px auto 55px;perspective:600px}
+.object-3d{width:100%;height:100%;position:relative;transform-style:preserve-3d;animation:rotateObject 12s linear infinite}
+.object-face{
+ position:absolute;inset:15px;
+ border:1px solid #c8cdd2;
+ background:rgba(180,190,200,.08);
+ box-shadow:inset 0 0 30px rgba(200,210,220,.12),0 0 18px #c8cdd222;
+}
+.object-face:nth-child(1){transform:rotateY(0deg) translateZ(48px)}
+.object-face:nth-child(2){transform:rotateY(90deg) translateZ(48px)}
+.object-face:nth-child(3){transform:rotateY(180deg) translateZ(48px)}
+.object-face:nth-child(4){transform:rotateY(270deg) translateZ(48px)}
+.object-face:nth-child(5){transform:rotateX(90deg) translateZ(48px)}
+.object-face:nth-child(6){transform:rotateX(-90deg) translateZ(48px)}
+@keyframes rotateObject{
+ from{transform:rotateX(0) rotateY(0) rotateZ(0)}
+ to{transform:rotateX(360deg) rotateY(360deg) rotateZ(360deg)}
+}
 
-    .intro-logo span,
-    .header-logo span {
-      color: #a63d3d;
-    }
+.about{padding:60px 20px;text-align:center;border-top:1px solid var(--line);min-height:170px}
+.about h2{font:30px Oswald}
+.about p{max-width:600px;margin:auto;color:#9ca3a9;font-size:12px;line-height:2;white-space:pre-wrap}
+footer{text-align:center;padding:25px;border-top:1px solid var(--line);color:#697178;font-size:10px;letter-spacing:1px}
 
-    .intro-subtitle {
-      color: #85817e;
-      font-size: 10px;
-      letter-spacing: 5px;
-      margin-top: 18px;
-    }
-
-    .intro-notice {
-      max-width: 330px;
-      color: #85817e;
-      font-size: 10px;
-      line-height: 1.8;
-      margin-top: 45px;
-    }
-
-    .intro-button {
-      margin-top: 30px;
-      padding: 17px 48px;
-      background: #a63d3d;
-      color: white;
-      border: none;
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 3px;
-    }
-
-    /* ШАПКА */
-
-    header {
-      padding: 30px 0;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid #242424;
-    }
-
-    .header-logo {
-      font-size: 21px;
-      font-weight: 900;
-      letter-spacing: 2px;
-    }
-
-    .header-label {
-      color: #85817e;
-      font-size: 9px;
-      letter-spacing: 3px;
-    }
-
-    /* ГЛАВНЫЙ ЗАГОЛОВОК */
-
-    .hero {
-      padding: 90px 0 75px;
-      text-align: center;
-    }
-
-    .hero h1 {
-      font-size: clamp(38px, 9vw, 76px);
-      font-weight: 900;
-      letter-spacing: -3px;
-      line-height: .95;
-    }
-
-    .hero h1 span {
-      color: #a63d3d;
-    }
-
-    .hero p {
-      color: #85817e;
-      font-size: 10px;
-      letter-spacing: 5px;
-      margin-top: 22px;
-    }
-
-    /* КАТЕГОРИИ */
-
-    .section-title {
-      font-size: 11px;
-      letter-spacing: 4px;
-      color: #85817e;
-      margin-bottom: 22px;
-      text-align: center;
-    }
-
-    .categories {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 80px;
-    }
-
-    .category {
-      width: 100%;
-      min-height: 75px;
-      background: #141414;
-      border: 1px solid #252525;
-      color: #f3f1ef;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 20px 24px;
-      text-align: left;
-      transition: .2s;
-    }
-
-    .category:hover,
-    .branch-button:hover {
-      border-color: #a63d3d;
-      background: #191313;
-    }
-
-    .category-number {
-      color: #a63d3d;
-      font-size: 12px;
-      font-weight: 800;
-      margin-right: 20px;
-    }
-
-    .category-name {
-      flex: 1;
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 2px;
-      overflow-wrap: anywhere;
-    }
-
-    .category-arrow {
-      color: #85817e;
-      margin-left: 10px;
-    }
-
-    /* СТРАНИЦЫ КАТЕГОРИЙ */
-
-    .catalog-view {
-      display: none;
-      margin-bottom: 80px;
-    }
-
-    .catalog-view.active {
-      display: block;
-    }
-
-    .catalog-heading {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 15px;
-      margin-bottom: 25px;
-    }
-
-    .catalog-heading h2 {
-      font-size: 19px;
-      font-weight: 900;
-      letter-spacing: 2px;
-      overflow-wrap: anywhere;
-    }
-
-    .back-button {
-      background: transparent;
-      color: #a63d3d;
-      border: 1px solid #512727;
-      padding: 11px 15px;
-      font-size: 9px;
-      font-weight: 800;
-      letter-spacing: 2px;
-      flex-shrink: 0;
-    }
-
-    .products {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .product {
-      background: #141414;
-      border: 1px solid #252525;
-      padding: 20px;
-      min-width: 0;
-    }
-
-    .product-number {
-      color: #a63d3d;
-      font-size: 10px;
-      margin-bottom: 15px;
-      font-weight: 800;
-    }
-
-    .product-name {
-      font-size: 13px;
-      font-weight: 800;
-      overflow-wrap: anywhere;
-      margin-bottom: 10px;
-    }
-
-    .product-volume {
-      color: #85817e;
-      font-size: 10px;
-      margin-bottom: 17px;
-    }
-
-    .product-price {
-      display: inline-block;
-      border: 1px solid #a63d3d;
-      padding: 9px 12px;
-      color: #f3f1ef;
-      font-size: 12px;
-      font-weight: 800;
-      margin-bottom: 18px;
-    }
-
-    .manager-link {
-      display: block;
-      text-align: center;
-      background: #a63d3d;
-      padding: 12px 8px;
-      color: white;
-      font-size: 9px;
-      font-weight: 800;
-      letter-spacing: 1px;
-    }
-
-    /* ДВЕ ВЕТКИ КАТЕГОРИИ 4 */
-
-    .branch-buttons {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    .branch-button {
-      min-height: 100px;
-      background: #141414;
-      border: 1px solid #252525;
-      color: #f3f1ef;
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 2px;
-      padding: 20px;
-      transition: .2s;
-      overflow-wrap: anywhere;
-    }
-
-    /* ABOUT SLAYER */
-
-    .about {
-      border-top: 1px solid #252525;
-      border-bottom: 1px solid #252525;
-      padding: 65px 0;
-      text-align: center;
-    }
-
-    .about h2,
-    .socials h2 {
-      font-size: 20px;
-      font-weight: 900;
-      letter-spacing: 3px;
-    }
-
-    .about-line {
-      width: 45px;
-      height: 2px;
-      background: #a63d3d;
-      margin: 22px auto;
-    }
-
-    .about p {
-      color: #85817e;
-      font-size: 11px;
-      line-height: 2;
-      letter-spacing: 1px;
-      max-width: 550px;
-      margin: auto;
-      white-space: pre-line;
-    }
-
-    /* СОЦИАЛЬНЫЕ СЕТИ */
-
-    .socials {
-      padding: 65px 0;
-      text-align: center;
-    }
-
-    .social-links {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 25px;
-    }
-
-    .social-link {
-      border: 1px solid #a63d3d;
-      padding: 15px 22px;
-      font-size: 10px;
-      font-weight: 800;
-      letter-spacing: 2px;
-      transition: .2s;
-    }
-
-    .social-link:hover {
-      background: #a63d3d;
-    }
-
-    footer {
-      border-top: 1px solid #252525;
-      padding: 25px 0;
-      text-align: center;
-      color: #555;
-      font-size: 9px;
-      letter-spacing: 3px;
-    }
-
-    @media (max-width: 520px) {
-      .products {
-        grid-template-columns: 1fr;
-      }
-
-      .hero {
-        padding: 70px 0 60px;
-      }
-
-      .category {
-        min-height: 68px;
-        padding: 17px;
-      }
-
-      .catalog-heading h2 {
-        font-size: 15px;
-      }
-    }
-  </style>
+@media(max-width:700px){
+ header{padding:0 5%}
+ .category-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+ .category-card{min-height:135px;padding:17px}
+ .category-name{font-size:21px}
+ .branch-grid{grid-template-columns:1fr 1fr;gap:10px}
+ .branch-card{padding:17px}
+ .products-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+ .product-card{padding:8px}
+ .product-name{font-size:16px}
+ .hero{padding:65px 20px 50px}
+ .modal-content{padding:20px}
+}
+</style>
 </head>
 
-<body class="locked">
+<body>
 
-  <!-- ПЕРВЫЙ ЭКРАН -->
+<div class="intro" id="intro">
+ <div class="intro-content">
+  <h1 class="intro-logo">Slayer<span>Shop</span></h1>
+  <div class="intro-subtitle">WELCOME TO OUR CATALOG</div>
+  <p class="intro-description">
+   Добро пожаловать в Slayer Shop.
+   Здесь представлен наш каталог.
+   Выберите интересующую категорию.
+  </p>
+  <button class="primary-btn" onclick="enterShop()">SHOP</button>
+ </div>
+</div>
 
-  <div class="intro" id="intro">
-    <div class="intro-logo">SLAYER<span>.</span></div>
-    <div class="intro-subtitle">international ship</div>
+<div id="store" class="hidden">
+<header>
+ <div class="brand">Slayer<span>Shop</span></div>
+ <a class="header-contact" href="https://t.me/sorrowmachine" target="_blank" rel="noopener">СВЯЗАТЬСЯ С МЕНЕДЖЕРОМ</a>
+</header>
 
-    <p class="intro-notice">
-      built in darkness
-    </p>
+<section class="hero">
+ <div class="hero-label">OFFICIAL CATALOG</div>
+ <h1>SLAYER SHOP</h1>
+ <p>Выберите интересующую категорию и ознакомьтесь с каталогом.</p>
+</section>
 
-    <button class="intro-button" onclick="enterShop()">SHOP</button>
+<main class="container">
+ <section id="categoriesSection">
+  <div class="section-heading">
+   <small>01 / КАТАЛОГ</small>
+   <h2>НАШИ КАТЕГОРИИ</h2>
+   <p>Выберите категорию.</p>
+  </div>
+  <div class="category-grid" id="categoryGrid"></div>
+ </section>
+
+ <section id="branchesSection" class="hidden">
+  <button class="back-btn" onclick="backToCategories()">← НАЗАД К КАТЕГОРИЯМ</button>
+  <div class="section-heading">
+   <small>04 / ВЫБЕРИТЕ РАЗДЕЛ</small>
+   <h2 id="branchesHeading"></h2>
+   <p>Выберите одну из двух кнопок.</p>
+  </div>
+  <div class="branch-grid" id="branchGrid"></div>
+ </section>
+
+ <section id="productsSection" class="hidden">
+  <button class="back-btn" id="backProducts" onclick="backFromProducts()">← НАЗАД</button>
+  <div class="section-heading">
+   <small>КАТАЛОГ / ВЫБРАННЫЙ РАЗДЕЛ</small>
+   <h2 id="productsHeading"></h2>
+   <p>Нажмите на товар, чтобы открыть подробную информацию.</p>
+  </div>
+  <div class="products-grid" id="productsGrid"></div>
+ </section>
+</main>
+
+<section class="cube-section">
+ <div class="section-heading">
+  <small>SLAYER SHOP</small>
+  <h2>OUR SPACE</h2>
+ </div>
+ <div class="object-scene">
+  <div class="object-3d">
+   <div class="object-face"></div>
+   <div class="object-face"></div>
+   <div class="object-face"></div>
+   <div class="object-face"></div>
+   <div class="object-face"></div>
+   <div class="object-face"></div>
+  </div>
+ </div>
+</section>
+
+<section class="about">
+ <h2>ABOUT</h2>
+ <p id="aboutText"></p>
+</section>
+<footer>© 2026 SLAYER SHOP. ALL RIGHTS RESERVED.</footer>
+</div>
+
+<div class="modal" id="productModal">
+ <div class="modal-content">
+  <button class="close-modal" onclick="closeModal()">×</button>
+  <h2 class="modal-title" id="modalTitle"></h2>
+  <div class="modal-gallery">
+   <div class="gallery-item">
+    <img id="modalProductImage" alt="Фото товара" onclick="zoomImage(this.src)">
+   </div>
+  </div>
+  <div class="detail-label">Описание</div>
+  <div class="modal-description" id="modalDescription"></div>
+
+  <div id="formArea" class="hidden">
+   <div class="detail-label">Выберите форму</div>
+   <div class="form-buttons" id="formButtons"></div>
   </div>
 
-
-  <main class="container">
-
-    <header>
-      <div class="header-logo">SLAYER<span>.</span> SHOP</div>
-      <div class="header-label">OFFICIAL STORE</div>
-    </header>
-
-
-    <section class="hero">
-      <h1>BUILT IN<br><span>DARKNESS.</span></h1>
-      <p>SLAYER SHOP</p>
-    </section>
-
-
-    <!-- ПЯТЬ ГЛАВНЫХ КАТЕГОРИЙ -->
-
-    <section id="categories-section">
-      <div class="section-title">SELECT CATEGORY</div>
-
-      <div class="categories">
-
-        <button class="category" onclick="openCategory(1)">
-          <span class="category-number">01</span>
-          <span class="category-name">Lab Reagent</span>
-          <span class="category-arrow">↗</span>
-        </button>
-
-        <button class="category" onclick="openCategory(2)">
-          <span class="category-number">02</span>
-          <span class="category-name">Drug</span>
-          <span class="category-arrow">↗</span>
-        </button>
-
-        <button class="category" onclick="openCategory(3)">
-          <span class="category-number">03</span>
-          <span class="category-name">Peptide</span>
-          <span class="category-arrow">↗</span>
-        </button>
-
-        <button class="category" onclick="openCategory(4)">
-          <span class="category-number">04</span>
-          <span class="category-name">steroid</span>
-          <span class="category-arrow">↗</span>
-        </button>
-
-        <button class="category" onclick="openCategory(5)">
-          <span class="category-number">05</span>
-          <span class="category-name">Other</span>
-          <span class="category-arrow">↗</span>
-        </button>
-
-      </div>
-    </section>
-
-
-    <!-- КАТЕГОРИЯ 1 -->
-
-    <section class="catalog-view" id="category-1">
-      <div class="catalog-heading">
-        <h2>КАТЕГОРИЯ 01</h2>
-        <button class="back-button" onclick="showCategories()">← НАЗАД</button>
-      </div>
-      <div class="products" id="products-1"></div>
-    </section>
-
-
-    <!-- КАТЕГОРИЯ 2 -->
-
-    <section class="catalog-view" id="category-2">
-      <div class="catalog-heading">
-        <h2>КАТЕГОРИЯ 02</h2>
-        <button class="back-button" onclick="showCategories()">← НАЗАД</button>
-      </div>
-      <div class="products" id="products-2"></div>
-    </section>
-
-
-    <!-- КАТЕГОРИЯ 3 -->
-
-    <section class="catalog-view" id="category-3">
-      <div class="catalog-heading">
-        <h2>КАТЕГОРИЯ 03</h2>
-        <button class="back-button" onclick="showCategories()">← НАЗАД</button>
-      </div>
-      <div class="products" id="products-3"></div>
-    </section>
-
-
-    <!-- КАТЕГОРИЯ 4: ВЫБОР ВЕТКИ -->
-
-    <section class="catalog-view" id="category-4">
-      <div class="catalog-heading">
-        <h2>КАТЕГОРИЯ 04</h2>
-        <button class="back-button" onclick="showCategories()">← НАЗАД</button>
-      </div>
-
-      <div class="branch-buttons">
-
-        <button class="branch-button" onclick="openBranch('left')">
-          Пероральная форма↗
-        </button>
-
-        <button class="branch-button" onclick="openBranch('right')">
-          Инъекционная форма↗
-        </button>
-
-      </div>
-    </section>
-
-
-    <!-- ЛЕВАЯ ВЕТКА: 4 ТОВАРА -->
-
-    <section class="catalog-view" id="branch-left">
-      <div class="catalog-heading">
-        <h2>ЛЕВАЯ ВЕТКА</h2>
-        <button class="back-button" onclick="openCategory(4)">← НАЗАД</button>
-      </div>
-      <div class="products" id="products-left"></div>
-    </section>
-
-
-    <!-- ПРАВАЯ ВЕТКА: 20 ТОВАРОВ -->
-
-    <section class="catalog-view" id="branch-right">
-      <div class="catalog-heading">
-        <h2>ПРАВАЯ ВЕТКА</h2>
-        <button class="back-button" onclick="openCategory(4)">← НАЗАД</button>
-      </div>
-      <div class="products" id="products-right"></div>
-    </section>
-
-
-    <!-- КАТЕГОРИЯ 5 -->
-
-    <section class="catalog-view" id="category-5">
-      <div class="catalog-heading">
-        <h2>КАТЕГОРИЯ 05</h2>
-        <button class="back-button" onclick="showCategories()">← НАЗАД</button>
-      </div>
-      <div class="products" id="products-5"></div>
-    </section>
-
-
-    <!-- ABOUT SLAYER -->
-
-    <section class="about">
-      <h2>ABOUT SLAYER</h2>
-      <div class="about-line"></div>
-
-      <p> Slayer Shop — это закрытый проект, специализирующийся на поставках лабораторных реагентов, пептидов и фармакологических препаратов для исследовательских целей. Мы работаем с проверенными соединениями, которые используются в научных и прикладных областях.
-
-Мы обеспечиваем надежную упаковку и отправку заказов в любые города и страны. Работаем без лишних вопросов и задержек. </p>
-    </section>
-
-
-    <!-- СОЦИАЛЬНЫЕ СЕТИ -->
-
-    <section class="socials">
-      <h2>FOLLOW SLAYER</h2>
-
-      <div class="social-links">
-
-        <a class="social-link"
-           href="https://t.me/ShopSlayer"
-           target="_blank">
-          TELEGRAM CHANNEL ↗
-        </a>
-
-        <a class="social-link"
-           href="https://www.tiktok.com/@shopslayer333"
-           target="_blank">
-          TIKTOK CHANNEL ↗
-        </a>
-
-      </div>
-    </section>
-
-
-    <footer>
-      SLAYER SHOP © 2026
-    </footer>
-
-  </main>
-
-
-  <script>
-
-    // ==========================================
-    // КОНТАКТ МЕНЕДЖЕРА
-    // Здесь можно изменить Telegram менеджера.
-    // ==========================================
-
-    const managerLink = "https://t.me/sorrowmachine";
-
-
-    // ==========================================
-    // ТОВАРЫ
-    //
-    // name   = название товара
-    // volume = объём или размер
-    // price  = цена
-    //
-    // Меняй только текст внутри кавычек.
-    // Не удаляй фигурные скобки и запятые.
-    // ==========================================
-
-    const catalog = {
-
-      // КАТЕГОРИЯ 1 — 10 ТОВАРОВ
-      1: [
-        { name: "erdafitinib", volume: "1g", price: "13.500₽" },
-        { name: "infigratinib", volume: "1g", price: "18.500₽" },
-        { name: "way316606", volume: "1g", price: "12.500₽" },
-        { name: "Tyra300", volume: "1g", price: "20.000₽" },
-        { name: "ky19382", volume: "1g", price: "не в наличии" },
-        { name: "odanacitib", volume: "1g", price: "35.000₽" },
-        { name: "way262611", volume: "1g", price: "35.000₽" },
-        { name: "sag21k", volume: "100mg", price: "45.000₽" },
-        { name: "ru58841", volume: "10g", price: "5000₽" },
-        { name: "minoxidil", volume: "500mg", price: "2500₽" }
-      ],
-
-      // КАТЕГОРИЯ 2 — 4 ТОВАРА
-      2: [
-        { name: "anastrazole", volume: "80pills", price: "2500₽" },
-        { name: "letrozope", volume: "40pills", price: "3000₽" },
-        { name: "examestane", volume: "40pills ", price: "3000₽" },
-        { name: "minoxidil", volume: "100pills", price: "2000₽" }
-      ],
-
-      // КАТЕГОРИЯ 3 — 15 ТОВАРОВ
-      3: [
-        { name: "Aod9604", volume: "5vial of 5mg", price: "4500₽" },
-        { name: "Ghk-Cu", volume: "10 vial of 50mg", price: "4500₽" },
-        { name: "Melatonan-II", volume: "10vial of 10mg", price: "15.000₽" },
-        { name: "Ipamorelin", volume: "10vial of 5mg", price: "12.500₽" },
-        { name: "HCG", volume: "10vial of 1000UI", price: "5000₽" },
-        { name: "Retatrutide", volume: "1 vial of 30mg", price: "3000₽" },
-        { name: "motc s", volume: "1 vial of 10mg", price: "2000₽" },
-        { name: "pt141", volume: "1vial of 10mg", price: "нету в наличии" },
-        { name: "Epitalon ", volume: "1vial of 10mg", price: "2500₽" },
-        { name: "Ghrp-2", volume: "5vial of 5mg", price: "3000₽" },
-        { name: "Ghrp-6", volume: "5vial of 5mg", price: "3000₽" },
-        { name: "cjc1295", volume: "1vial of 10mg", price: "2500₽" },
-        { name: "Glow", volume: "1vial of 70mg", price: "2500₽" },
-        { name: "Tb-500", volume: "1vial of 10mg", price: "2000₽" },
-        { name: "Bpc-157", volume: "1vial of 10mg", price: "2000₽" }
-      ],
-
-      // КАТЕГОРИЯ 4 — ЛЕВАЯ ВЕТКА: 4 ТОВАРА
-      left: [
-        { name: "Oxandrolon", volume: "100pills", price: "4500₽" },
-        { name: "Metan", volume: "100pills", price: "3000₽" },
-        { name: "Oxymetholone", volume: "100pills", price: "5000₽" },
-        { name: "stanozolol", volume: "100pills", price: "3000₽" }
-      ],
-
-      // КАТЕГОРИЯ 4 — ПРАВАЯ ВЕТКА: 20 ТОВАРОВ
-      right: [
-        { name: "Trenbolone enanthate", volume: "10ml", price: "5000₽" },
-        { name: "Trenbolone acetate", volume: "10ml", price: "4500₽" },
-        { name: "Trenbolone gexa", volume: "10ml", price: "8000₽" },
-        { name: "Tri-tren", volume: "10ml", price: "5500₽" },
-        { name: "Testosterone enanthate", volume: "10ml", price: "5000₽" },
-        { name: "Testosterone Acetate", volume: "10ml", price: "4500₽" },
-        { name: "Testosterone cypionate", volume: "10ml", price: "5000₽" },
-        { name: "Testosterone phenilpropionate", volume: "30ml", price: "5000₽" },
-        { name: "Testosterone propionate", volume: "30ml", price: "5500₽" },
-        { name: "Sustanone", volume: "10ml", price: "3000₽" },
-        { name: "Mtren", volume: "10ml", price: "3500₽" },
-        { name: "Decanoate phenylpropionate", volume: "10ml", price: "3500₽" },
-        { name: "Nandrolone decanoate", volume: "10ml", price: "4000₽" },
-        { name: "Oxymetholone", volume: "10ml", price: "3500₽" },
-        { name: "Boldenone", volume: "10ml", price: "4500₽" },
-        { name: "Stanozol", volume: "10ml", price: "2500₽" },
-        { name: "Masteron", volume: "10ml", price: "5500₽" },
-        { name: "methenolone enanthate", volume: "10ml", price: "6500₽" },
-        { name: "nandrolone phenylpropionate", volume: "10ml", price: "3500₽" },
-        { name: "metan", volume: "10ml", price: "3000₽" }
-      ],
-
-      // КАТЕГОРИЯ 5 — 11 ТОВАРОВ
-      5: [
-        { name: "Aqualyx", volume: "5vial of 10ml", price: "4500₽" },
-        { name: "bacteriostatic water", volume: "30ml", price: "2500₽" },
-        { name: "Azealic gel ", volume: "20%", price: "2000₽" },
-        { name: "hydrocortisone ", volume: "4%", price: "1500₽" },
-        { name: "инсулиновые шприцы", volume: "100pcs", price: "2500₽" },
-        { name: "minoxidil whey", volume: "30ml", price: "2000₽" },
-        { name: "ru58841 whey", volume: "30ml", price: "2000" },
-        { name: "pp405 whey", volume: "30ml", price: "2000₽" },
-        { name: "jw0061", volume: "30ml", price: "2000₽" },
-        { name: "tretinoin cream", volume: "0.025%—0.1%", price: "1500₽" },
-        { name: "tretinoin gel", volume: "0.025%—0.1%", price: "2000₽" }
-      ]
-
-    };
-
-
-    // ==========================================
-    // НИЖЕ НИЧЕГО МЕНЯТЬ НЕ НУЖНО
-    // ЭТО КОД РАБОТЫ МАГАЗИНА
-    // ==========================================
-
-    function enterShop() {
-      document.getElementById("intro").classList.add("hidden");
-      document.body.classList.remove("locked");
+  <div class="detail-label">Вариант / объём</div>
+  <div class="volume-buttons" id="volumeButtons"></div>
+  <div class="price-display" id="priceDisplay"></div>
+  <a class="modal-contact" href="https://t.me/sorrowmachine" target="_blank" rel="noopener">CONTACT THE MANAGER ↗</a>
+ </div>
+</div>
+
+<div class="image-view" id="imageView" onclick="closeZoom()">
+ <button onclick="closeZoom()">×</button>
+ <img id="zoomedImage" alt="Увеличенное фото">
+</div>
+
+<script>
+
+/* =====================================================
+   КАТАЛОГ (ВСТАВЛЕНЫ ДАННЫЕ ИЗ СТАРОГО HTML)
+===================================================== */
+
+function P(name,image,description,volume,price){
+ return {name,image,description,volumes:[{volume,price}]};
+}
+
+/* КАТЕГОРИЯ 1 — LAB REAGENT */
+const category1 = {
+ name:"LAB REAGENT",
+ products:[
+  P("erdafitinib","","Селективный ингибитор тирозинкиназных рецепторов FGFR.","1g","13.500₽"),
+  P("infigratinib","","Пероральный ингибитор рецепторов FGFR1-3.","1g","18.500₽"),
+  P("way316606","","Антагонист секретируемого белка SFRP1.","1g","12.500₽"),
+  P("Tyra300","","Селективный ингибитор рецептора FGFR3.","1g","20.000₽"),
+  P("ky19382","","Активатор сигнального пути Wnt/β-catenin.","1g","не в наличии"),
+  P("odanacitib","","Ингибитор катепсина К.","1g","35.000₽"),
+  P("way262611","","Соединение для лабораторных исследований.","1g","35.000₽"),
+  P("sag21k","","Агонист Smoothened.","100mg","45.000₽"),
+  P("ru58841","","Нестероидный антиандроген местного действия.","10g","5000₽"),
+  P("minoxidil","","Вазодилататор для стимуляции роста волос.","500mg","2500₽")
+ ]
+};
+
+/* КАТЕГОРИЯ 2 — DRUG */
+const category2 = {
+ name:"DRUG",
+ products:[
+  P("anastrazole","","Ингибитор ароматазы.","80pills","2500₽"),
+  P("letrozope","","Мощный ингибитор ароматазы.","40pills","3000₽"),
+  P("examestane","","Стероидный ингибитор ароматазы.","40pills","3000₽"),
+  P("minoxidil","","Пероральный вазодилататор.","100pills","2000₽")
+ ]
+};
+
+/* КАТЕГОРИЯ 3 — PEPTIDE */
+const category3 = {
+ name:"PEPTIDE",
+ products:[
+  P("Aod9604","","Фрагмент гормона роста.","5vial of 5mg","4500₽"),
+  P("Ghk-Cu","","Медный пептид.","10 vial of 50mg","4500₽"),
+  P("Melatonan-II","","Аналог меланоцитстимулирующего гормона.","10vial of 10mg","15.000₽"),
+  P("Ipamorelin","","Агонист грелиновых рецепторов.","10vial of 5mg","12.500₽"),
+  P("HCG","","Хорионический гонадотропин.","10vial of 1000UI","5000₽"),
+  P("Retatrutide","","Тройной агонист рецепторов.","1 vial of 30mg","3000₽"),
+  P("motc s","","Синтетический пептид.","1 vial of 10mg","2000₽"),
+  P("pt141","","Аналог гормона.","1vial of 10mg","нету в наличии"),
+  P("Epitalon ","","Синтетический тетрапептид.","1vial of 10mg","2500₽"),
+  P("Ghrp-2","","Агонист грелиновых рецепторов.","5vial of 5mg","3000₽"),
+  P("Ghrp-6","","Агонист грелиновых рецепторов.","5vial of 5mg","3000₽"),
+  P("cjc1295","","Аналог GRF.","1vial of 10mg","2500₽"),
+  P("Glow","","Комплексный пептидный препарат.","1vial of 70mg","2500₽"),
+  P("Tb-500","","Синтетический пептид.","1vial of 10mg","2000₽"),
+  P("Bpc-157","","Пептид для восстановления.","1vial of 10mg","2000₽")
+ ]
+};
+
+/* КАТЕГОРИЯ 4 — STEROID */
+const category4 = {
+ name:"STEROID",
+ branches:[
+  {
+   name:"ПЕРОРАЛЬНАЯ ФОРМА",
+   products:[
+    P("Oxandrolon","","Оральный стероид.","100pills","4500₽"),
+    P("Metan","","Оральный стероид.","100pills","3000₽"),
+    P("Oxymetholone","","Оральный стероид.","100pills","5000₽"),
+    P("stanozolol","","Оральный стероид.","100pills","3000₽")
+   ]
+  },
+  {
+   name:"ИНЪЕКЦИОННАЯ ФОРМА",
+   products:[
+    P("Trenbolone enanthate","","Инъекционный стероид.","10ml","5000₽"),
+    P("Trenbolone acetate","","Инъекционный стероид.","10ml","4500₽"),
+    P("Trenbolone gexa","","Инъекционный стероид.","10ml","8000₽"),
+    P("Tri-tren","","Инъекционный стероид.","10ml","5500₽"),
+    P("Testosterone enanthate","","Инъекционный стероид.","10ml","5000₽"),
+    P("Testosterone Acetate","","Инъекционный стероид.","10ml","4500₽"),
+    P("Testosterone cypionate","","Инъекционный стероид.","10ml","5000₽"),
+    P("Testosterone phenilpropionate","","Инъекционный стероид.","30ml","5000₽"),
+    P("Testosterone propionate","","Инъекционный стероид.","30ml","5500₽"),
+    P("Sustanone","","Инъекционный стероид.","10ml","3000₽"),
+    P("Mtren","","Инъекционный стероид.","10ml","3500₽"),
+    P("Decanoate phenylpropionate","","Инъекционный стероид.","10ml","3500₽"),
+    P("Nandrolone decanoate","","Инъекционный стероид.","10ml","4000₽"),
+    P("Oxymetholone","","Инъекционный стероид.","10ml","3500₽"),
+    P("Boldenone","","Инъекционный стероид.","10ml","4500₽"),
+    P("Stanozol","","Инъекционный стероид.","10ml","2500₽"),
+    P("Masteron","","Инъекционный стероид.","10ml","5500₽"),
+    P("methenolone enanthate","","Инъекционный стероид.","10ml","6500₽"),
+    P("nandrolone phenylpropionate","","Инъекционный стероид.","10ml","3500₽"),
+    P("metan","","Инъекционный стероид.","10ml","3000₽")
+   ]
+  }
+ ]
+};
+
+/* КАТЕГОРИЯ 5 — OTHER */
+const category5 = {
+ name:"OTHER",
+ products:[
+  {
+   name:"Tretinoin",
+   image:"",
+   description:"Ретиноид для наружного применения.",
+   forms:[
+    {
+     name:"Гель",
+     volumes:[
+      {volume:"0.025%",price:"2000₽"},
+      {volume:"0.05%",price:"2000₽"},
+      {volume:"0.1%",price:"2000₽"}
+     ]
+    },
+    {
+     name:"Крем",
+     volumes:[
+      {volume:"0.025%",price:"1500₽"},
+      {volume:"0.05%",price:"1500₽"},
+      {volume:"0.1%",price:"1500₽"}
+     ]
     }
+   ]
+  },
+  P("bacteriostatic water","","Бактериостатическая вода.","30ml","2500₽"),
+  P("Azealic gel","","Гель для кожи.","20%","2000₽"),
+  P("hydrocortisone","","Крем с гидрокортизоном.","4%","1500₽"),
+  P("инсулиновые шприцы","","Стерильные шприцы.","100pcs","2500₽"),
+  P("minoxidil whey","","Сыворотка для волос.","30ml","2000₽"),
+  P("ru58841 whey","","Сыворотка для волос.","30ml","2000₽"),
+  P("pp405 whey","","Сыворотка для волос.","30ml","2000₽"),
+  P("jw0061","","Сыворотка для волос.","30ml","2000₽"),
+  P("tretinoin cream","","Крем с третиноином.","0.025%—0.1%","1500₽"),
+  P("tretinoin gel","","Гель с третиноином.","0.025%—0.1%","2000₽")
+ ]
+};
 
-    function hideAllViews() {
-      document.querySelectorAll(".catalog-view").forEach(function(view) {
-        view.classList.remove("active");
-      });
+const categories=[category1, category2, category3, category4, category5];
 
-      document.getElementById("categories-section").style.display = "none";
-    }
+/* =====================================================
+   ЛОГИКА САЙТА
+===================================================== */
 
-    function showCategories() {
-      document.querySelectorAll(".catalog-view").forEach(function(view) {
-        view.classList.remove("active");
-      });
+let currentProduct=null;
+let currentForm=0;
+let currentVolume=0;
+let previousScreen="category";
 
-      document.getElementById("categories-section").style.display = "block";
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
+function enterShop(){
+ document.getElementById("intro").classList.add("hidden");
+ document.getElementById("store").classList.remove("hidden");
+ renderCategories();
+}
 
-    function renderProducts(items, targetId) {
-      const container = document.getElementById(targetId);
-      container.innerHTML = "";
+function hideSections(){
+ ["categoriesSection","branchesSection","productsSection"].forEach(id=>{
+  document.getElementById(id).classList.add("hidden");
+ });
+}
 
-      items.forEach(function(item, index) {
-        const card = document.createElement("div");
-        card.className = "product";
+function renderCategories(){
+ const grid=document.getElementById("categoryGrid");
+ grid.innerHTML="";
+ categories.forEach((category,index)=>{
+  const button=document.createElement("button");
+  button.className="category-card";
 
-        const number = document.createElement("div");
-        number.className = "product-number";
-        number.textContent = "PRODUCT " + String(index + 1).padStart(2, "0");
+  const number=document.createElement("span");
+  number.className="category-number";
+  number.textContent="0"+(index+1)+" / CATEGORY";
 
-        const name = document.createElement("div");
-        name.className = "product-name";
-        name.textContent = item.name;
+  const name=document.createElement("span");
+  name.className="category-name";
+  name.textContent=category.name;
 
-        const volume = document.createElement("div");
-        volume.className = "product-volume";
-        volume.textContent = item.volume;
+  const count=document.createElement("span");
+  count.className="category-count";
+  count.textContent=category.branches
+   ?"2 раздела"
+   :category.products.length+" товаров";
 
-        const price = document.createElement("div");
-        price.className = "product-price";
-        price.textContent = item.price;
+  const arrow=document.createElement("span");
+  arrow.className="category-arrow";
+  arrow.textContent="↗";
 
-        const link = document.createElement("a");
-        link.className = "manager-link";
-        link.href = managerLink;
-        link.target = "_blank";
-        link.rel = "noopener";
-        link.textContent = "CONTACT MANAGER ↗";
+  button.append(number,name,count,arrow);
+  button.onclick=()=>openCategory(index);
+  grid.appendChild(button);
+ });
+}
 
-        card.appendChild(number);
-        card.appendChild(name);
-        card.appendChild(volume);
-        card.appendChild(price);
-        card.appendChild(link);
+function openCategory(index){
+ const category=categories[index];
+ hideSections();
 
-        container.appendChild(card);
-      });
-    }
+ if(category.branches){
+  document.getElementById("branchesSection").classList.remove("hidden");
+  document.getElementById("branchesHeading").textContent=category.name;
+  renderBranches(category.branches);
+ }else{
+  showProducts(category.products,category.name,"category");
+ }
+ window.scrollTo({top:0,behavior:"smooth"});
+}
 
-    function openCategory(number) {
-      hideAllViews();
+function renderBranches(branches){
+ const grid=document.getElementById("branchGrid");
+ grid.innerHTML="";
 
-      if (number === 4) {
-        document.getElementById("category-4").classList.add("active");
-      } else {
-        document.getElementById("category-" + number).classList.add("active");
-        renderProducts(catalog[number], "products-" + number);
-      }
+ branches.forEach((branch,index)=>{
+  const button=document.createElement("button");
+  button.className="branch-card";
 
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
+  const number=document.createElement("span");
+  number.className="category-number";
+  number.textContent="04 / 0"+(index+1);
 
-    function openBranch(branch) {
-      hideAllViews();
+  const name=document.createElement("span");
+  name.className="branch-name";
+  name.textContent=branch.name;
 
-      if (branch === "left") {
-        document.getElementById("branch-left").classList.add("active");
-        renderProducts(catalog.left, "products-left");
-      }
+  const count=document.createElement("span");
+  count.className="branch-count";
+  count.textContent=branch.products.length+" товаров";
 
-      if (branch === "right") {
-        document.getElementById("branch-right").classList.add("active");
-        renderProducts(catalog.right, "products-right");
-      }
+  const arrow=document.createElement("span");
+  arrow.className="category-arrow";
+  arrow.textContent="↗";
 
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
+  button.append(number,name,count,arrow);
+  button.onclick=()=>{
+   showProducts(branch.products,branch.name,"branch");
+   window.scrollTo({top:0,behavior:"smooth"});
+  };
+  grid.appendChild(button);
+ });
+}
 
-  </script>
+function showProducts(products,title,from){
+ previousScreen=from;
+ hideSections();
+ document.getElementById("productsSection").classList.remove("hidden");
+ document.getElementById("productsHeading").textContent=title;
+ document.getElementById("backProducts").textContent=
+  from==="branch"?"← НАЗАД К ДВУМ КНОПКАМ":"← НАЗАД К КАТЕГОРИЯМ";
 
+ const grid=document.getElementById("productsGrid");
+ grid.innerHTML="";
+
+ products.forEach((product,index)=>{
+  const card=document.createElement("div");
+  card.className="product-card";
+
+  const button=document.createElement("button");
+  button.className="product-open";
+
+  const img=document.createElement("img");
+  img.className="product-image";
+  img.alt="Фото товара";
+  if(product.image)img.src=product.image;
+
+  const name=document.createElement("span");
+  name.className="product-name";
+  name.textContent=product.name;
+
+  button.append(img,name);
+  button.onclick=()=>openProduct(product);
+
+  const contact=document.createElement("a");
+  contact.className="product-contact";
+  contact.href="https://t.me/sorrowmachine";
+  contact.target="_blank";
+  contact.rel="noopener";
+  contact.textContent="CONTACT THE MANAGER";
+
+  card.append(button,contact);
+  grid.appendChild(card);
+ });
+}
+
+function backToCategories(){
+ hideSections();
+ document.getElementById("categoriesSection").classList.remove("hidden");
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function backFromProducts(){
+ if(previousScreen==="branch"){
+  hideSections();
+  document.getElementById("branchesSection").classList.remove("hidden");
+ }else{
+  backToCategories();
+ }
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function openProduct(product){
+ currentProduct=product;
+ currentForm=0;
+ currentVolume=0;
+
+ document.getElementById("modalTitle").textContent=product.name;
+ document.getElementById("modalDescription").textContent=product.description||"";
+
+ const image=document.getElementById("modalProductImage");
+ image.src=product.image||"";
+ image.style.display=product.image?"block":"none";
+
+ const formArea=document.getElementById("formArea");
+ const formButtons=document.getElementById("formButtons");
+ formButtons.innerHTML="";
+
+ if(product.forms){
+  formArea.classList.remove("hidden");
+
+  product.forms.forEach((form,index)=>{
+   const button=document.createElement("button");
+   button.className="choice-btn";
+   button.textContent=form.name;
+   button.onclick=()=>{
+    currentForm=index;
+    currentVolume=0;
+    renderFormButtons();
+    renderVolumes();
+   };
+   formButtons.appendChild(button);
+  });
+  renderFormButtons();
+ }else{
+  formArea.classList.add("hidden");
+ }
+
+ renderVolumes();
+ document.getElementById("productModal").classList.add("active");
+ document.body.style.overflow="hidden";
+}
+
+function getVolumes(){
+ return currentProduct.forms
+  ?currentProduct.forms[currentForm].volumes
+  :currentProduct.volumes;
+}
+
+function renderFormButtons(){
+ document.querySelectorAll("#formButtons button").forEach((button,index)=>{
+  button.classList.toggle("active",index===currentForm);
+ });
+}
+
+function renderVolumes(){
+ const area=document.getElementById("volumeButtons");
+ area.innerHTML="";
+
+ getVolumes().forEach((item,index)=>{
+  const button=document.createElement("button");
+  button.className="choice-btn";
+  button.textContent=item.volume;
+  button.classList.toggle("active",index===currentVolume);
+
+  button.onclick=()=>{
+   currentVolume=index;
+   renderVolumes();
+  };
+  area.appendChild(button);
+ });
+
+ updatePrice();
+}
+
+function updatePrice(){
+ const item=getVolumes()[currentVolume];
+ document.getElementById("priceDisplay").textContent=
+  item&&item.price?"Цена: "+item.price:"";
+}
+
+function closeModal(){
+ document.getElementById("productModal").classList.remove("active");
+ document.body.style.overflow="";
+}
+
+document.getElementById("productModal").addEventListener("click",function(event){
+ if(event.target===this)closeModal();
+});
+
+function zoomImage(src){
+ if(!src)return;
+ document.getElementById("zoomedImage").src=src;
+ document.getElementById("imageView").classList.add("active");
+}
+
+function closeZoom(){
+ document.getElementById("imageView").classList.remove("active");
+}
+
+document.addEventListener("keydown",function(event){
+ if(event.key==="Escape"){
+  closeZoom();
+  closeModal();
+ }
+});
+
+</script>
 </body>
 </html>
