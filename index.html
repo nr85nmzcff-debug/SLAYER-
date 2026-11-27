@@ -11,31 +11,60 @@
  --bg:#08090a;
  --panel:#121518;
  --panel2:#1b2024;
- --silver:#c8cdd2;
- --muted:#92999f;
+ --red:#a63d3d;       /* Акцентный красный */
+ --red-dark:#5c1a1a;  /* Темно-красный для границ */
+ --red-glow:#a63d3d55;/* Свечение */
  --white:#f4f5f6;
- --line:rgba(255,255,255,.1);
-}
+ --line:rgba(166, 61, 61, .3); /* Красные линии */
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--white);font-family:Manrope,sans-serif}
 button{font:inherit;cursor:pointer}
 .hidden{display:none!important}
 
+/* --- ГЛАВНЫЙ ЭКРАН --- */
 .intro{
  position:fixed;inset:0;z-index:1000;
  display:flex;align-items:center;justify-content:center;
  text-align:center;padding:25px;
- background:radial-gradient(ellipse at center,#252b30,#101315 48%,#050606)
+ background:radial-gradient(ellipse at center,#1a0808,#050606 60%);
 }
-.intro-content{max-width:620px}
+.intro-content{max-width:620px; display: flex; flex-direction: column; align-items: center;}
 .intro-logo{font:600 clamp(50px,11vw,95px) Oswald;letter-spacing:5px;margin:0}
-.intro-logo span{color:var(--silver)}
-.intro-subtitle{font-size:12px;letter-spacing:4px;color:#aeb5bb;margin-top:12px}
-.intro-description{font-size:13px;line-height:2;color:#aab0b5;margin:35px auto;max-width:480px}
-.primary-btn{padding:16px 55px;border:1px solid var(--silver);background:var(--silver);color:#08090a;font-weight:800;letter-spacing:3px}
-.primary-btn:hover{background:transparent;color:white}
+.intro-logo span{color:var(--red)}
+.intro-subtitle{font-size:12px;letter-spacing:4px;color:var(--red);margin-top:12px;font-weight:700}
 
+/* ПРИКОЛЮХА: Вращающийся глаз / Луна */
+.eye-container {
+  width: 140px; height: 140px; margin: 40px auto 20px;
+  position: relative; display: flex; align-items: center; justify-content: center;
+}
+.eye-outer {
+  width: 100%; height: 100%; border-radius: 50%;
+  border: 2px dashed var(--red); position: absolute;
+  animation: spinEye 15s linear infinite; opacity: 0.6;
+}
+.eye-inner {
+  width: 80%; height: 80%; border-radius: 50%;
+  background: radial-gradient(circle, #2a0808 0%, #0a0000 100%);
+  border: 2px solid var(--red-dark);
+  box-shadow: 0 0 30px var(--red-glow), inset 0 0 20px var(--red-glow);
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.eye-pupil {
+  width: 30%; height: 30%; background: var(--red); border-radius: 50%;
+  box-shadow: 0 0 15px var(--red);
+  animation: pulsePupil 3s ease-in-out infinite;
+}
+@keyframes spinEye { 100% { transform: rotate(360deg); } }
+@keyframes pulsePupil { 0%, 100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.2); opacity: 1; } }
+
+.intro-description{font-size:13px;line-height:2;color:#aab0b5;margin:10px auto 35px;max-width:480px}
+.primary-btn{padding:16px 55px;border:1px solid var(--red);background:var(--red);color:#08090a;font-weight:800;letter-spacing:3px; transition: 0.3s;}
+.primary-btn:hover{background:transparent;color:var(--white); box-shadow: 0 0 20px var(--red-glow);}
+
+/* --- МАГАЗИН --- */
 #store{min-height:100vh}
 header{
  height:76px;padding:0 7%;display:flex;align-items:center;
@@ -44,77 +73,77 @@ header{
  backdrop-filter:blur(12px)
 }
 .brand{font:500 27px Oswald;letter-spacing:2px}
-.brand span{color:var(--silver)}
-.header-contact{color:var(--silver);text-decoration:none;border:1px solid var(--line);padding:10px 16px;font-size:10px;letter-spacing:1px}
+.brand span{color:var(--red)}
+.header-contact{color:var(--red);text-decoration:none;border:1px solid var(--red-dark);padding:10px 16px;font-size:10px;letter-spacing:1px; transition: 0.3s;}
+.header-contact:hover { background: var(--red); color: #08090a; }
 
-.hero{text-align:center;padding:85px 20px 65px;background:linear-gradient(180deg,#151a1e,#08090a)}
-.hero-label{font-size:10px;letter-spacing:5px;color:var(--muted)}
+.hero{text-align:center;padding:85px 20px 65px;background:linear-gradient(180deg,#150a0a,#08090a)}
+.hero-label{font-size:10px;letter-spacing:5px;color:var(--red)}
 .hero h1{font:500 clamp(40px,7vw,68px) Oswald;letter-spacing:3px;margin:16px 0}
 .hero p{max-width:570px;margin:auto;color:#a5abb0;font-size:13px;line-height:2}
 
 .container{width:min(1120px,90%);margin:auto}
 .section-heading{margin:55px 0 28px}
-.section-heading small{color:var(--muted);letter-spacing:3px;font-size:10px}
+.section-heading small{color:var(--red);letter-spacing:3px;font-size:10px; font-weight:800;}
 .section-heading h2{font:500 34px Oswald;margin:8px 0;letter-spacing:1px}
-.section-heading p{font-size:12px;color:var(--muted)}
+.section-heading p{font-size:12px;color:#a5abb0}
 
 .category-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-bottom:75px}
 .category-card,.branch-card{
  min-height:155px;padding:24px;text-align:left;color:white;
- background:linear-gradient(145deg,#1c2226,#101315);
+ background:linear-gradient(145deg,#1c1212,#0a0808);
  border:1px solid var(--line);position:relative;transition:.25s;width:100%
 }
-.category-card:hover,.branch-card:hover{border-color:#b5bdc4;transform:translateY(-4px)}
-.category-number{font:13px Oswald;color:#858d94;letter-spacing:3px}
+.category-card:hover,.branch-card:hover{border-color:var(--red);transform:translateY(-4px); box-shadow: 0 5px 15px var(--red-glow);}
+.category-number{font:13px Oswald;color:var(--red);letter-spacing:3px}
 .category-name{display:block;font:25px Oswald;margin-top:17px}
 .category-count{display:block;font-size:10px;color:#858d94;margin-top:7px}
-.category-arrow{position:absolute;right:22px;bottom:20px;color:var(--silver);font-size:22px}
+.category-arrow{position:absolute;right:22px;bottom:20px;color:var(--red);font-size:22px}
 
 .branch-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px;margin-bottom:75px}
 .branch-card{min-height:180px}
 .branch-name{display:block;font:27px Oswald;margin-top:22px}
 .branch-count{display:block;font-size:10px;color:#858d94;margin-top:9px}
 
-.back-btn{padding:11px 17px;background:transparent;border:1px solid var(--line);color:var(--silver);font-size:11px;letter-spacing:1px;margin-bottom:25px}
+.back-btn{padding:11px 17px;background:transparent;border:1px solid var(--red-dark);color:var(--red);font-size:11px;letter-spacing:1px;margin-bottom:25px; transition: 0.3s;}
+.back-btn:hover { background: var(--red); color: #08090a; }
+
 .products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}
-.product-card{padding:12px;background:var(--panel);border:1px solid var(--line);transition:.2s}
-.product-card:hover{border-color:#818b93;transform:translateY(-3px)}
-.product-open{display:block;width:100%;padding:0;border:0;background:none;color:white;text-align:left}
-.product-image{display:block;width:100%;aspect-ratio:1;object-fit:cover;background:#22282d}
-.product-name{display:block;padding:14px 3px 5px;font:19px Oswald;min-height:45px}
-.product-contact{display:block;text-align:center;text-decoration:none;border:1px solid #505960;color:#d5d9dc;padding:11px 4px;margin-top:8px;font-size:10px;letter-spacing:1px}
-.product-contact:hover{background:var(--silver);color:#08090a}
+.product-card{padding:16px;background:var(--panel);border:1px solid var(--line);transition:.2s; display: flex; flex-direction: column;}
+.product-card:hover{border-color:var(--red);transform:translateY(-3px); box-shadow: 0 5px 15px var(--red-glow);}
+.product-open{display:block;width:100%;padding:0;border:0;background:none;color:white;text-align:left; flex-grow: 1;}
+/* Убрали класс product-image */
+.product-name{display:block;padding:5px 0 10px;font:19px Oswald; min-height: 50px;}
+.product-contact{display:block;text-align:center;text-decoration:none;border:1px solid var(--red-dark);color:var(--white);padding:11px 4px;margin-top:15px;font-size:10px;letter-spacing:1px; transition: 0.3s;}
+.product-contact:hover{background:var(--red);color:#08090a;}
 
 .modal{display:none;position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.9);padding:20px;overflow-y:auto;align-items:center;justify-content:center}
 .modal.active{display:flex}
-.modal-content{width:min(760px,100%);background:#111619;border:1px solid #424a50;padding:27px;position:relative;margin:auto}
-.close-modal{position:absolute;right:17px;top:10px;background:none;border:0;color:white;font-size:30px}
-.modal-title{font:32px Oswald;margin:0 35px 20px 0}
-.modal-gallery{display:flex;gap:14px;margin:20px 0}
-.gallery-item{width:115px}
-.gallery-item img{width:115px;height:115px;object-fit:cover;background:#252b30;border:1px solid var(--line);cursor:zoom-in}
-.detail-label{font-size:10px;color:#9ba3aa;letter-spacing:2px;margin:22px 0 10px;text-transform:uppercase}
+.modal-content{width:min(600px,100%);background:#111619;border:1px solid var(--red-dark);padding:30px;position:relative;margin:auto; box-shadow: 0 0 40px rgba(166, 61, 61, 0.15);}
+.close-modal{position:absolute;right:17px;top:10px;background:none;border:0;color:var(--red);font-size:30px; transition: 0.2s;}
+.close-modal:hover { color: white; }
+.modal-title{font:32px Oswald;margin:0 35px 10px 0; color: var(--white);}
+/* Убрали modal-gallery */
+.detail-label{font-size:10px;color:var(--red);letter-spacing:2px;margin:22px 0 10px;text-transform:uppercase; font-weight: 800;}
 .modal-description{font-size:13px;line-height:1.9;color:#b5bbc0;white-space:pre-wrap}
 .form-buttons,.volume-buttons{display:flex;flex-wrap:wrap;gap:9px}
-.choice-btn{padding:11px 16px;background:#1c2226;border:1px solid #485159;color:#e0e3e5;font-size:12px}
-.choice-btn.active,.choice-btn:hover{background:var(--silver);color:#08090a;border-color:var(--silver)}
-.price-display{font:27px Oswald;margin:18px 0}
-.modal-contact{display:block;text-align:center;text-decoration:none;background:var(--silver);color:#08090a;padding:15px;margin-top:22px;font-size:11px;font-weight:800;letter-spacing:2px}
+.choice-btn{padding:11px 16px;background:#1c2226;border:1px solid #485159;color:#e0e3e5;font-size:12px; transition: 0.2s;}
+.choice-btn.active,.choice-btn:hover{background:var(--red);color:#08090a;border-color:var(--red);}
+.price-display{font:27px Oswald;margin:25px 0 15px; color: var(--white);}
+.modal-contact{display:block;text-align:center;text-decoration:none;background:var(--red);color:#08090a;padding:15px;margin-top:15px;font-size:11px;font-weight:800;letter-spacing:2px; transition: 0.3s;}
+.modal-contact:hover { background: var(--white); }
 
-.image-view{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.96);display:none;align-items:center;justify-content:center;padding:20px}
-.image-view.active{display:flex}
-.image-view img{max-width:90vw;max-height:85vh;object-fit:contain}
-.image-view button{position:absolute;right:25px;top:15px;background:none;border:0;color:white;font-size:35px}
+.image-view{display: none !important;} /* Убрали полностью, так как картинок нет */
 
 /* НОВЫЙ 3D ОБЪЕКТ */
-.cube-section{padding:60px 20px 80px;text-align:center;background:linear-gradient(180deg,#08090a,#151a1e);border-top:1px solid var(--line)}
+.cube-section{padding:60px 20px 80px;text-align:center;background:linear-gradient(180deg,#08090a,#150a0a);border-top:1px solid var(--line)}
 .object-scene{width:140px;height:140px;margin:45px auto 55px;perspective:600px}
 .object-3d{width:100%;height:100%;position:relative;transform-style:preserve-3d;animation:rotateObject 12s linear infinite}
 .object-face{
  position:absolute;inset:15px;
- border:1px solid #c8cdd2;
- background:rgba(180,190,200,.08);
- box-shadow:inset 0 0 30px rgba(200,210,220,.12),0 0 18px #c8cdd222;
+ border:1px solid var(--red);
+ background:rgba(166, 61, 61, .08);
+ box-shadow:inset 0 0 30px rgba(166, 61, 61, .12),0 0 18px var(--red-glow);
 }
 .object-face:nth-child(1){transform:rotateY(0deg) translateZ(48px)}
 .object-face:nth-child(2){transform:rotateY(90deg) translateZ(48px)}
@@ -128,9 +157,9 @@ header{
 }
 
 .about{padding:60px 20px;text-align:center;border-top:1px solid var(--line);min-height:170px}
-.about h2{font:30px Oswald}
+.about h2{font:30px Oswald; color: var(--white);}
 .about p{max-width:600px;margin:auto;color:#9ca3a9;font-size:12px;line-height:2;white-space:pre-wrap}
-footer{text-align:center;padding:25px;border-top:1px solid var(--line);color:#697178;font-size:10px;letter-spacing:1px}
+footer{text-align:center;padding:25px;border-top:1px solid var(--line);color:var(--red);font-size:10px;letter-spacing:1px}
 
 @media(max-width:700px){
  header{padding:0 5%}
@@ -140,8 +169,8 @@ footer{text-align:center;padding:25px;border-top:1px solid var(--line);color:#69
  .branch-grid{grid-template-columns:1fr 1fr;gap:10px}
  .branch-card{padding:17px}
  .products-grid{grid-template-columns:repeat(2,1fr);gap:10px}
- .product-card{padding:8px}
- .product-name{font-size:16px}
+ .product-card{padding:12px;}
+ .product-name{font-size:16px; min-height: 40px;}
  .hero{padding:65px 20px 50px}
  .modal-content{padding:20px}
 }
@@ -154,6 +183,15 @@ footer{text-align:center;padding:25px;border-top:1px solid var(--line);color:#69
  <div class="intro-content">
   <h1 class="intro-logo">Slayer<span>Shop</span></h1>
   <div class="intro-subtitle">WELCOME TO OUR CATALOG</div>
+  
+  <!-- ПРИКОЛЮХА (Анимация) -->
+  <div class="eye-container">
+    <div class="eye-outer"></div>
+    <div class="eye-inner">
+      <div class="eye-pupil"></div>
+    </div>
+  </div>
+
   <p class="intro-description">
    Добро пожаловать в Slayer Shop.
    Здесь представлен наш каталог.
@@ -234,11 +272,7 @@ footer{text-align:center;padding:25px;border-top:1px solid var(--line);color:#69
  <div class="modal-content">
   <button class="close-modal" onclick="closeModal()">×</button>
   <h2 class="modal-title" id="modalTitle"></h2>
-  <div class="modal-gallery">
-   <div class="gallery-item">
-    <img id="modalProductImage" alt="Фото товара" onclick="zoomImage(this.src)">
-   </div>
-  </div>
+  
   <div class="detail-label">Описание</div>
   <div class="modal-description" id="modalDescription"></div>
 
@@ -252,11 +286,6 @@ footer{text-align:center;padding:25px;border-top:1px solid var(--line);color:#69
   <div class="price-display" id="priceDisplay"></div>
   <a class="modal-contact" href="https://t.me/sorrowmachine" target="_blank" rel="noopener">CONTACT THE MANAGER ↗</a>
  </div>
-</div>
-
-<div class="image-view" id="imageView" onclick="closeZoom()">
- <button onclick="closeZoom()">×</button>
- <img id="zoomedImage" alt="Увеличенное фото">
 </div>
 
 <script>
@@ -518,16 +547,11 @@ function showProducts(products,title,from){
   const button=document.createElement("button");
   button.className="product-open";
 
-  const img=document.createElement("img");
-  img.className="product-image";
-  img.alt="Фото товара";
-  if(product.image)img.src=product.image;
-
   const name=document.createElement("span");
   name.className="product-name";
   name.textContent=product.name;
 
-  button.append(img,name);
+  button.append(name);
   button.onclick=()=>openProduct(product);
 
   const contact=document.createElement("a");
@@ -565,10 +589,6 @@ function openProduct(product){
 
  document.getElementById("modalTitle").textContent=product.name;
  document.getElementById("modalDescription").textContent=product.description||"";
-
- const image=document.getElementById("modalProductImage");
- image.src=product.image||"";
- image.style.display=product.image?"block":"none";
 
  const formArea=document.getElementById("formArea");
  const formButtons=document.getElementById("formButtons");
@@ -646,19 +666,8 @@ document.getElementById("productModal").addEventListener("click",function(event)
  if(event.target===this)closeModal();
 });
 
-function zoomImage(src){
- if(!src)return;
- document.getElementById("zoomedImage").src=src;
- document.getElementById("imageView").classList.add("active");
-}
-
-function closeZoom(){
- document.getElementById("imageView").classList.remove("active");
-}
-
 document.addEventListener("keydown",function(event){
  if(event.key==="Escape"){
-  closeZoom();
   closeModal();
  }
 });
