@@ -11,14 +11,14 @@
  --bg:#08090a;
  --panel:#121518;
  --panel2:#1b2024;
- --red:#a63d3d;       /* Акцентный красный */
- --red-dark:#5c1a1a;  /* Темно-красный для границ */
- --red-glow:#a63d3d55;/* Свечение */
+ --red:#a63d3d;       
+ --red-dark:#5c1a1a;  
+ --red-glow:#a63d3d55;
  --white:#f4f5f6;
- --line:rgba(166, 61, 61, .3); /* Красные линии */
+ --line:rgba(166, 61, 61, .3); 
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--white);font-family:Manrope,sans-serif}
+body{margin:0;background:var(--bg);color:var(--white);font-family:Manrope,sans-serif; position: relative;}
 button{font:inherit;cursor:pointer}
 .hidden{display:none!important}
 
@@ -34,7 +34,7 @@ button{font:inherit;cursor:pointer}
 .intro-logo span{color:var(--red)}
 .intro-subtitle{font-size:12px;letter-spacing:4px;color:var(--red);margin-top:12px;font-weight:700}
 
-/* ПРИКОЛЮХА: Вращающийся глаз / Луна */
+/* Анимация глаза/луны */
 .eye-container {
   width: 140px; height: 140px; margin: 40px auto 20px;
   position: relative; display: flex; align-items: center; justify-content: center;
@@ -61,7 +61,7 @@ button{font:inherit;cursor:pointer}
 @keyframes pulsePupil { 0%, 100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.2); opacity: 1; } }
 
 .intro-description{font-size:13px;line-height:2;color:#aab0b5;margin:10px auto 35px;max-width:480px}
-.primary-btn{padding:16px 55px;border:1px solid var(--red);background:var(--red);color:#08090a;font-weight:800;letter-spacing:3px; transition: 0.3s;}
+.primary-btn{padding:16px 55px;border:1px solid var(--red);background:var(--red);color:#08090a;font-weight:800;letter-spacing:3px; transition: 0.3s; position: relative; z-index: 10;}
 .primary-btn:hover{background:transparent;color:var(--white); box-shadow: 0 0 20px var(--red-glow);}
 
 /* --- МАГАЗИН --- */
@@ -108,13 +108,27 @@ header{
 .back-btn{padding:11px 17px;background:transparent;border:1px solid var(--red-dark);color:var(--red);font-size:11px;letter-spacing:1px;margin-bottom:25px; transition: 0.3s;}
 .back-btn:hover { background: var(--red); color: #08090a; }
 
+/* --- КАРТОЧКИ С ШЕРСТЬЮ --- */
 .products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}
-.product-card{padding:16px;background:var(--panel);border:1px solid var(--line);transition:.2s; display: flex; flex-direction: column;}
+.product-card{
+    padding:16px; background:var(--panel); border:1px solid var(--line);
+    transition:.2s; display: flex; flex-direction: column; position: relative; overflow: hidden;
+    min-height: 160px; 
+}
+.product-card::before, .product-card::after {
+    content: ""; position: absolute; width: 60px; height: 60px;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.4'/%3E%3C/svg%3E");
+    pointer-events: none; opacity: 0.15; filter: contrast(200%) drop-shadow(0 0 2px red); z-index: 1;
+}
+.product-card::before { top: -10px; left: -10px; transform: rotate(45deg); }
+.product-card::after { bottom: -10px; right: -10px; transform: rotate(-135deg); }
+
 .product-card:hover{border-color:var(--red);transform:translateY(-3px); box-shadow: 0 5px 15px var(--red-glow);}
-.product-open{display:block;width:100%;padding:0;border:0;background:none;color:white;text-align:left; flex-grow: 1;}
-/* Убрали класс product-image */
+.product-card:hover::before, .product-card:hover::after { opacity: 0.4; }
+.product-open{display:block;width:100%;padding:0;border:0;background:none;color:white;text-align:left; flex-grow: 1; z-index: 2;}
 .product-name{display:block;padding:5px 0 10px;font:19px Oswald; min-height: 50px;}
-.product-contact{display:block;text-align:center;text-decoration:none;border:1px solid var(--red-dark);color:var(--white);padding:11px 4px;margin-top:15px;font-size:10px;letter-spacing:1px; transition: 0.3s;}
+.product-preview { font-size: 11px; color: #858d94; margin-bottom: 15px; z-index: 2; display: block;}
+.product-contact{display:block;text-align:center;text-decoration:none;border:1px solid var(--red-dark);color:var(--white);padding:11px 4px;margin-top:15px;font-size:10px;letter-spacing:1px; transition: 0.3s; z-index: 2;}
 .product-contact:hover{background:var(--red);color:#08090a;}
 
 .modal{display:none;position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.9);padding:20px;overflow-y:auto;align-items:center;justify-content:center}
@@ -123,7 +137,6 @@ header{
 .close-modal{position:absolute;right:17px;top:10px;background:none;border:0;color:var(--red);font-size:30px; transition: 0.2s;}
 .close-modal:hover { color: white; }
 .modal-title{font:32px Oswald;margin:0 35px 10px 0; color: var(--white);}
-/* Убрали modal-gallery */
 .detail-label{font-size:10px;color:var(--red);letter-spacing:2px;margin:22px 0 10px;text-transform:uppercase; font-weight: 800;}
 .modal-description{font-size:13px;line-height:1.9;color:#b5bbc0;white-space:pre-wrap}
 .form-buttons,.volume-buttons{display:flex;flex-wrap:wrap;gap:9px}
@@ -133,32 +146,36 @@ header{
 .modal-contact{display:block;text-align:center;text-decoration:none;background:var(--red);color:#08090a;padding:15px;margin-top:15px;font-size:11px;font-weight:800;letter-spacing:2px; transition: 0.3s;}
 .modal-contact:hover { background: var(--white); }
 
-.image-view{display: none !important;} /* Убрали полностью, так как картинок нет */
+/* --- БЛОК С ВОЛКОМ И 3D ФИГУРАМИ --- */
+.space-section { padding: 80px 20px; display: flex; flex-direction: column; align-items: center; border-top: 1px solid var(--line); background: #0a0808;}
+.wolf-showcase { width: 100%; max-width: 400px; position: relative; margin-bottom: 50px; border: 1px solid var(--red-dark); padding: 5px; box-shadow: 0 0 30px var(--red-glow);}
+.wolf-showcase img { width: 100%; display: block; filter: grayscale(100%) contrast(120%) sepia(20%) hue-rotate(-30deg); opacity: 0.9; }
+.wolf-showcase::after { content: ""; position: absolute; inset: 0; background: radial-gradient(circle, transparent 50%, #0a0808 100%); pointer-events: none; }
 
-/* НОВЫЙ 3D ОБЪЕКТ */
-.cube-section{padding:60px 20px 80px;text-align:center;background:linear-gradient(180deg,#08090a,#150a0a);border-top:1px solid var(--line)}
-.object-scene{width:140px;height:140px;margin:45px auto 55px;perspective:600px}
-.object-3d{width:100%;height:100%;position:relative;transform-style:preserve-3d;animation:rotateObject 12s linear infinite}
+.object-scene{width:180px;height:180px;margin:0 auto;perspective:800px; position: relative; z-index: 2;}
+.object-3d{width:100%;height:100%;position:relative;transform-style:preserve-3d;animation:rotateObject 20s linear infinite}
 .object-face{
  position:absolute;inset:15px;
  border:1px solid var(--red);
- background:rgba(166, 61, 61, .08);
- box-shadow:inset 0 0 30px rgba(166, 61, 61, .12),0 0 18px var(--red-glow);
+ background:rgba(166, 61, 61, .05);
+ box-shadow:inset 0 0 30px rgba(166, 61, 61, .2),0 0 18px var(--red-glow);
+ backdrop-filter: blur(2px);
 }
-.object-face:nth-child(1){transform:rotateY(0deg) translateZ(48px)}
-.object-face:nth-child(2){transform:rotateY(90deg) translateZ(48px)}
-.object-face:nth-child(3){transform:rotateY(180deg) translateZ(48px)}
-.object-face:nth-child(4){transform:rotateY(270deg) translateZ(48px)}
-.object-face:nth-child(5){transform:rotateX(90deg) translateZ(48px)}
-.object-face:nth-child(6){transform:rotateX(-90deg) translateZ(48px)}
+.object-face:nth-child(1){transform:rotateY(0deg) translateZ(68px)}
+.object-face:nth-child(2){transform:rotateY(90deg) translateZ(68px)}
+.object-face:nth-child(3){transform:rotateY(180deg) translateZ(68px)}
+.object-face:nth-child(4){transform:rotateY(270deg) translateZ(68px)}
+.object-face:nth-child(5){transform:rotateX(90deg) translateZ(68px)}
+.object-face:nth-child(6){transform:rotateX(-90deg) translateZ(68px)}
 @keyframes rotateObject{
  from{transform:rotateX(0) rotateY(0) rotateZ(0)}
  to{transform:rotateX(360deg) rotateY(360deg) rotateZ(360deg)}
 }
 
-.about{padding:60px 20px;text-align:center;border-top:1px solid var(--line);min-height:170px}
-.about h2{font:30px Oswald; color: var(--white);}
-.about p{max-width:600px;margin:auto;color:#9ca3a9;font-size:12px;line-height:2;white-space:pre-wrap}
+.about{padding:60px 20px;text-align:center;border-top:1px solid var(--line);min-height:170px; background: #0a0808;}
+.about h2{font:30px Oswald; color: var(--red); margin-bottom: 15px;}
+.about p{max-width:600px;margin:auto;color:#d5d9dc;font-size:13px;line-height:2.2;white-space:pre-wrap; letter-spacing: 0.5px;}
+.about p strong { color: var(--white); font-weight: 800;}
 footer{text-align:center;padding:25px;border-top:1px solid var(--line);color:var(--red);font-size:10px;letter-spacing:1px}
 
 @media(max-width:700px){
@@ -173,6 +190,13 @@ footer{text-align:center;padding:25px;border-top:1px solid var(--line);color:var
  .product-name{font-size:16px; min-height: 40px;}
  .hero{padding:65px 20px 50px}
  .modal-content{padding:20px}
+ .object-scene { width: 140px; height: 140px; }
+ .object-face:nth-child(1){transform:rotateY(0deg) translateZ(48px)}
+ .object-face:nth-child(2){transform:rotateY(90deg) translateZ(48px)}
+ .object-face:nth-child(3){transform:rotateY(180deg) translateZ(48px)}
+ .object-face:nth-child(4){transform:rotateY(270deg) translateZ(48px)}
+ .object-face:nth-child(5){transform:rotateX(90deg) translateZ(48px)}
+ .object-face:nth-child(6){transform:rotateX(-90deg) translateZ(48px)}
 }
 </style>
 </head>
@@ -184,7 +208,6 @@ footer{text-align:center;padding:25px;border-top:1px solid var(--line);color:var
   <h1 class="intro-logo">Slayer<span>Shop</span></h1>
   <div class="intro-subtitle">WELCOME TO OUR CATALOG</div>
   
-  <!-- ПРИКОЛЮХА (Анимация) -->
   <div class="eye-container">
     <div class="eye-outer"></div>
     <div class="eye-inner">
@@ -244,11 +267,17 @@ footer{text-align:center;padding:25px;border-top:1px solid var(--line);color:var
  </section>
 </main>
 
-<section class="cube-section">
- <div class="section-heading">
+<!-- ВОЛК И ГЕОМЕТРИЯ -->
+<section class="space-section">
+ <div class="section-heading" style="text-align:center; width:100%;">
   <small>SLAYER SHOP</small>
   <h2>OUR SPACE</h2>
  </div>
+ 
+ <div class="wolf-showcase">
+    <img src="https://i.ibb.co/3s6GjB6/wolf-dark.jpg" alt="Wolf">
+ </div>
+
  <div class="object-scene">
   <div class="object-3d">
    <div class="object-face"></div>
@@ -262,8 +291,14 @@ footer{text-align:center;padding:25px;border-top:1px solid var(--line);color:var
 </section>
 
 <section class="about">
- <h2>ABOUT</h2>
- <p id="aboutText"></p>
+ <h2>ABOUT SLAYER SHOP</h2>
+ <p>
+   <strong>SLAYER SHOP</strong> — это место, где вы можете найти редкие препараты и лабораторные реагенты для своих задач. Мы не задаем лишних вопросов и гарантируем полную конфиденциальность.
+   
+   Мы обеспечиваем надежную упаковку и быструю отправку заказов в любые города и страны. Наша цель — сделать процесс покупки максимально простым, удобным и безопасным для вас.
+   
+   Если вам нужен качественный продукт без лишних сложностей — вы по адресу.
+ </p>
 </section>
 <footer>© 2026 SLAYER SHOP. ALL RIGHTS RESERVED.</footer>
 </div>
@@ -291,7 +326,7 @@ footer{text-align:center;padding:25px;border-top:1px solid var(--line);color:var
 <script>
 
 /* =====================================================
-   КАТАЛОГ (ВСТАВЛЕНЫ ДАННЫЕ ИЗ СТАРОГО HTML)
+   КАТАЛОГ (ОБНОВЛЕНА ЦЕНА KY19382)
 ===================================================== */
 
 function P(name,image,description,volume,price){
@@ -306,7 +341,7 @@ const category1 = {
   P("infigratinib","","Пероральный ингибитор рецепторов FGFR1-3.","1g","18.500₽"),
   P("way316606","","Антагонист секретируемого белка SFRP1.","1g","12.500₽"),
   P("Tyra300","","Селективный ингибитор рецептора FGFR3.","1g","20.000₽"),
-  P("ky19382","","Активатор сигнального пути Wnt/β-catenin.","1g","не в наличии"),
+  P("ky19382","","Активатор сигнального пути Wnt/β-catenin.","1g","35.000₽"),
   P("odanacitib","","Ингибитор катепсина К.","1g","35.000₽"),
   P("way262611","","Соединение для лабораторных исследований.","1g","35.000₽"),
   P("sag21k","","Агонист Smoothened.","100mg","45.000₽"),
@@ -537,141 +572,4 @@ function showProducts(products,title,from){
  document.getElementById("backProducts").textContent=
   from==="branch"?"← НАЗАД К ДВУМ КНОПКАМ":"← НАЗАД К КАТЕГОРИЯМ";
 
- const grid=document.getElementById("productsGrid");
- grid.innerHTML="";
-
- products.forEach((product,index)=>{
-  const card=document.createElement("div");
-  card.className="product-card";
-
-  const button=document.createElement("button");
-  button.className="product-open";
-
-  const name=document.createElement("span");
-  name.className="product-name";
-  name.textContent=product.name;
-
-  button.append(name);
-  button.onclick=()=>openProduct(product);
-
-  const contact=document.createElement("a");
-  contact.className="product-contact";
-  contact.href="https://t.me/sorrowmachine";
-  contact.target="_blank";
-  contact.rel="noopener";
-  contact.textContent="CONTACT THE MANAGER";
-
-  card.append(button,contact);
-  grid.appendChild(card);
- });
-}
-
-function backToCategories(){
- hideSections();
- document.getElementById("categoriesSection").classList.remove("hidden");
- window.scrollTo({top:0,behavior:"smooth"});
-}
-
-function backFromProducts(){
- if(previousScreen==="branch"){
-  hideSections();
-  document.getElementById("branchesSection").classList.remove("hidden");
- }else{
-  backToCategories();
- }
- window.scrollTo({top:0,behavior:"smooth"});
-}
-
-function openProduct(product){
- currentProduct=product;
- currentForm=0;
- currentVolume=0;
-
- document.getElementById("modalTitle").textContent=product.name;
- document.getElementById("modalDescription").textContent=product.description||"";
-
- const formArea=document.getElementById("formArea");
- const formButtons=document.getElementById("formButtons");
- formButtons.innerHTML="";
-
- if(product.forms){
-  formArea.classList.remove("hidden");
-
-  product.forms.forEach((form,index)=>{
-   const button=document.createElement("button");
-   button.className="choice-btn";
-   button.textContent=form.name;
-   button.onclick=()=>{
-    currentForm=index;
-    currentVolume=0;
-    renderFormButtons();
-    renderVolumes();
-   };
-   formButtons.appendChild(button);
-  });
-  renderFormButtons();
- }else{
-  formArea.classList.add("hidden");
- }
-
- renderVolumes();
- document.getElementById("productModal").classList.add("active");
- document.body.style.overflow="hidden";
-}
-
-function getVolumes(){
- return currentProduct.forms
-  ?currentProduct.forms[currentForm].volumes
-  :currentProduct.volumes;
-}
-
-function renderFormButtons(){
- document.querySelectorAll("#formButtons button").forEach((button,index)=>{
-  button.classList.toggle("active",index===currentForm);
- });
-}
-
-function renderVolumes(){
- const area=document.getElementById("volumeButtons");
- area.innerHTML="";
-
- getVolumes().forEach((item,index)=>{
-  const button=document.createElement("button");
-  button.className="choice-btn";
-  button.textContent=item.volume;
-  button.classList.toggle("active",index===currentVolume);
-
-  button.onclick=()=>{
-   currentVolume=index;
-   renderVolumes();
-  };
-  area.appendChild(button);
- });
-
- updatePrice();
-}
-
-function updatePrice(){
- const item=getVolumes()[currentVolume];
- document.getElementById("priceDisplay").textContent=
-  item&&item.price?"Цена: "+item.price:"";
-}
-
-function closeModal(){
- document.getElementById("productModal").classList.remove("active");
- document.body.style.overflow="";
-}
-
-document.getElementById("productModal").addEventListener("click",function(event){
- if(event.target===this)closeModal();
-});
-
-document.addEventListener("keydown",function(event){
- if(event.key==="Escape"){
-  closeModal();
- }
-});
-
-</script>
-</body>
-</html>
+ const
