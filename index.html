@@ -572,4 +572,146 @@ function showProducts(products,title,from){
  document.getElementById("backProducts").textContent=
   from==="branch"?"← НАЗАД К ДВУМ КНОПКАМ":"← НАЗАД К КАТЕГОРИЯМ";
 
- const
+ const grid=document.getElementById("productsGrid");
+ grid.innerHTML="";
+
+ products.forEach((product,index)=>{
+  const card=document.createElement("div");
+  card.className="product-card";
+
+  const button=document.createElement("button");
+  button.className="product-open";
+
+  const name=document.createElement("span");
+  name.className="product-name";
+  name.textContent=product.name;
+  
+  // Добавляем превью, чтобы карточка не была пустой
+  const preview = document.createElement("span");
+  preview.className = "product-preview";
+  preview.textContent = "Нажмите для подробностей →";
+
+  button.append(name, preview);
+  button.onclick=()=>openProduct(product);
+
+  const contact=document.createElement("a");
+  contact.className="product-contact";
+  contact.href="https://t.me/sorrowmachine";
+  contact.target="_blank";
+  contact.rel="noopener";
+  contact.textContent="CONTACT THE MANAGER";
+
+  card.append(button,contact);
+  grid.appendChild(card);
+ });
+}
+
+function backToCategories(){
+ hideSections();
+ document.getElementById("categoriesSection").classList.remove("hidden");
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function backFromProducts(){
+ if(previousScreen==="branch"){
+  hideSections();
+  document.getElementById("branchesSection").classList.remove("hidden");
+ }else{
+  backToCategories();
+ }
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function openProduct(product){
+ currentProduct=product;
+ currentForm=0;
+ currentVolume=0;
+
+ document.getElementById("modalTitle").textContent=product.name;
+ document.getElementById("modalDescription").textContent=product.description||"";
+
+ const formArea=document.getElementById("formArea");
+ const formButtons=document.getElementById("formButtons");
+ formButtons.innerHTML="";
+
+ if(product.forms){
+  formArea.classList.remove("hidden");
+
+  product.forms.forEach((form,index)=>{
+   const button=document.createElement("button");
+   button.className="choice-btn";
+   button.textContent=form.name;
+   button.onclick=()=>{
+    currentForm=index;
+    currentVolume=0;
+    renderFormButtons();
+    renderVolumes();
+   };
+   formButtons.appendChild(button);
+  });
+  renderFormButtons();
+ }else{
+  formArea.classList.add("hidden");
+ }
+
+ renderVolumes();
+ document.getElementById("productModal").classList.add("active");
+ document.body.style.overflow="hidden";
+}
+
+function getVolumes(){
+ return currentProduct.forms
+  ?currentProduct.forms[currentForm].volumes
+  :currentProduct.volumes;
+}
+
+function renderFormButtons(){
+ document.querySelectorAll("#formButtons button").forEach((button,index)=>{
+  button.classList.toggle("active",index===currentForm);
+ });
+}
+
+function renderVolumes(){
+ const area=document.getElementById("volumeButtons");
+ area.innerHTML="";
+
+ getVolumes().forEach((item,index)=>{
+  const button=document.createElement("button");
+  button.className="choice-btn";
+  button.textContent=item.volume;
+  button.classList.toggle("active",index===currentVolume);
+
+  button.onclick=()=>{
+   currentVolume=index;
+   renderVolumes();
+  };
+  area.appendChild(button);
+ });
+
+ updatePrice();
+}
+
+function updatePrice(){
+ const item=getVolumes()[currentVolume];
+ document.getElementById("priceDisplay").textContent=
+  item&&item.price?"Цена: "+item.price:"";
+}
+
+function closeModal(){
+ document.getElementById("productModal").classList.remove("active");
+ document.body.style.overflow="";
+}
+
+document.getElementById("productModal").addEventListener("click",function(event){
+ if(event.target===this)closeModal();
+});
+
+document.addEventListener("keydown",function(event){
+ if(event.key==="Escape"){
+  closeModal();
+ }
+});
+
+</script>
+</body>
+</html>
