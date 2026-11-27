@@ -11,19 +11,14 @@
  --bg:#08090a;
  --panel:#121518;
  --panel2:#1b2024;
- --red:#a63d3d;       
- --red-dark:#5c1a1a;  
- --red-glow:#a63d3d55;
+ --red:#a63d3d;       /* Акцентный красный */
+ --red-dark:#5c1a1a;  /* Темно-красный для границ */
+ --red-glow:#a63d3d55;/* Свечение */
  --white:#f4f5f6;
- --line:rgba(166, 61, 61, .3); 
+ --line:rgba(166, 61, 61, .3); /* Красные линии */
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--white);font-family:Manrope,sans-serif; position: relative;}
-body::before {
-    content: ""; position: fixed; inset: 0; z-index: -1;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
-    pointer-events: none;
-}
+body{margin:0;background:var(--bg);color:var(--white);font-family:Manrope,sans-serif}
 button{font:inherit;cursor:pointer}
 .hidden{display:none!important}
 
@@ -39,7 +34,7 @@ button{font:inherit;cursor:pointer}
 .intro-logo span{color:var(--red)}
 .intro-subtitle{font-size:12px;letter-spacing:4px;color:var(--red);margin-top:12px;font-weight:700}
 
-/* Анимация глаза/луны */
+/* ПРИКОЛЮХА: Вращающийся глаз / Луна */
 .eye-container {
   width: 140px; height: 140px; margin: 40px auto 20px;
   position: relative; display: flex; align-items: center; justify-content: center;
@@ -114,13 +109,10 @@ header{
 .back-btn:hover { background: var(--red); color: #08090a; }
 
 .products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}
-.product-card{padding:16px;background:var(--panel);border:1px solid var(--line);transition:.2s; display: flex; flex-direction: column; position: relative; overflow: hidden;}
-.product-card::before {
-    content: "🐺"; position: absolute; top: 10px; right: 10px; font-size: 12px; opacity: 0.2;
-}
+.product-card{padding:16px;background:var(--panel);border:1px solid var(--line);transition:.2s; display: flex; flex-direction: column;}
 .product-card:hover{border-color:var(--red);transform:translateY(-3px); box-shadow: 0 5px 15px var(--red-glow);}
-.product-card:hover::before { opacity: 0.8; }
 .product-open{display:block;width:100%;padding:0;border:0;background:none;color:white;text-align:left; flex-grow: 1;}
+/* Убрали класс product-image */
 .product-name{display:block;padding:5px 0 10px;font:19px Oswald; min-height: 50px;}
 .product-contact{display:block;text-align:center;text-decoration:none;border:1px solid var(--red-dark);color:var(--white);padding:11px 4px;margin-top:15px;font-size:10px;letter-spacing:1px; transition: 0.3s;}
 .product-contact:hover{background:var(--red);color:#08090a;}
@@ -131,6 +123,7 @@ header{
 .close-modal{position:absolute;right:17px;top:10px;background:none;border:0;color:var(--red);font-size:30px; transition: 0.2s;}
 .close-modal:hover { color: white; }
 .modal-title{font:32px Oswald;margin:0 35px 10px 0; color: var(--white);}
+/* Убрали modal-gallery */
 .detail-label{font-size:10px;color:var(--red);letter-spacing:2px;margin:22px 0 10px;text-transform:uppercase; font-weight: 800;}
 .modal-description{font-size:13px;line-height:1.9;color:#b5bbc0;white-space:pre-wrap}
 .form-buttons,.volume-buttons{display:flex;flex-wrap:wrap;gap:9px}
@@ -140,44 +133,32 @@ header{
 .modal-contact{display:block;text-align:center;text-decoration:none;background:var(--red);color:#08090a;padding:15px;margin-top:15px;font-size:11px;font-weight:800;letter-spacing:2px; transition: 0.3s;}
 .modal-contact:hover { background: var(--white); }
 
-/* --- 3D ФИГУРЫ С ВОЛКОМ --- */
-.cube-section{padding:60px 20px 80px;text-align:center;background:linear-gradient(180deg,#08090a,#150a0a);border-top:1px solid var(--line); position: relative; overflow: hidden;}
-.cube-section::before {
-    content: ""; position: absolute; inset: 0;
-    background: url('https://i.ibb.co/3s6GjB6/wolf-dark.jpg') center/cover;
-    opacity: 0.1; filter: grayscale(100%) contrast(150%);
-    mix-blend-mode: overlay; pointer-events: none;
-}
-.object-scene{width:180px;height:180px;margin:45px auto 55px;perspective:800px; position: relative; z-index: 2;}
-.object-3d{width:100%;height:100%;position:relative;transform-style:preserve-3d;animation:rotateObject 20s linear infinite}
+.image-view{display: none !important;} /* Убрали полностью, так как картинок нет */
+
+/* НОВЫЙ 3D ОБЪЕКТ */
+.cube-section{padding:60px 20px 80px;text-align:center;background:linear-gradient(180deg,#08090a,#150a0a);border-top:1px solid var(--line)}
+.object-scene{width:140px;height:140px;margin:45px auto 55px;perspective:600px}
+.object-3d{width:100%;height:100%;position:relative;transform-style:preserve-3d;animation:rotateObject 12s linear infinite}
 .object-face{
  position:absolute;inset:15px;
  border:1px solid var(--red);
- background:rgba(166, 61, 61, .05);
- box-shadow:inset 0 0 30px rgba(166, 61, 61, .2),0 0 18px var(--red-glow);
- backdrop-filter: blur(2px);
- display: flex; align-items: center; justify-content: center;
+ background:rgba(166, 61, 61, .08);
+ box-shadow:inset 0 0 30px rgba(166, 61, 61, .12),0 0 18px var(--red-glow);
 }
-/* Картинка внутри куба */
-.wolf-img {
-    width: 100%; height: 100%; object-fit: cover; opacity: 0.6; filter: contrast(120%) grayscale(80%) sepia(20%) hue-rotate(-30deg);
-    mix-blend-mode: screen;
-}
-.object-face:nth-child(1){transform:rotateY(0deg) translateZ(68px)}
-.object-face:nth-child(2){transform:rotateY(90deg) translateZ(68px)}
-.object-face:nth-child(3){transform:rotateY(180deg) translateZ(68px)}
-.object-face:nth-child(4){transform:rotateY(270deg) translateZ(68px)}
-.object-face:nth-child(5){transform:rotateX(90deg) translateZ(68px)}
-.object-face:nth-child(6){transform:rotateX(-90deg) translateZ(68px)}
+.object-face:nth-child(1){transform:rotateY(0deg) translateZ(48px)}
+.object-face:nth-child(2){transform:rotateY(90deg) translateZ(48px)}
+.object-face:nth-child(3){transform:rotateY(180deg) translateZ(48px)}
+.object-face:nth-child(4){transform:rotateY(270deg) translateZ(48px)}
+.object-face:nth-child(5){transform:rotateX(90deg) translateZ(48px)}
+.object-face:nth-child(6){transform:rotateX(-90deg) translateZ(48px)}
 @keyframes rotateObject{
  from{transform:rotateX(0) rotateY(0) rotateZ(0)}
  to{transform:rotateX(360deg) rotateY(360deg) rotateZ(360deg)}
 }
 
-.about{padding:60px 20px;text-align:center;border-top:1px solid var(--line);min-height:170px; background: #0a0808;}
-.about h2{font:30px Oswald; color: var(--red); margin-bottom: 15px;}
-.about p{max-width:600px;margin:auto;color:#d5d9dc;font-size:13px;line-height:2.2;white-space:pre-wrap; letter-spacing: 0.5px;}
-.about p strong { color: var(--white); font-weight: 800;}
+.about{padding:60px 20px;text-align:center;border-top:1px solid var(--line);min-height:170px}
+.about h2{font:30px Oswald; color: var(--white);}
+.about p{max-width:600px;margin:auto;color:#9ca3a9;font-size:12px;line-height:2;white-space:pre-wrap}
 footer{text-align:center;padding:25px;border-top:1px solid var(--line);color:var(--red);font-size:10px;letter-spacing:1px}
 
 @media(max-width:700px){
@@ -192,13 +173,6 @@ footer{text-align:center;padding:25px;border-top:1px solid var(--line);color:var
  .product-name{font-size:16px; min-height: 40px;}
  .hero{padding:65px 20px 50px}
  .modal-content{padding:20px}
- .object-scene { width: 140px; height: 140px; }
- .object-face:nth-child(1){transform:rotateY(0deg) translateZ(48px)}
- .object-face:nth-child(2){transform:rotateY(90deg) translateZ(48px)}
- .object-face:nth-child(3){transform:rotateY(180deg) translateZ(48px)}
- .object-face:nth-child(4){transform:rotateY(270deg) translateZ(48px)}
- .object-face:nth-child(5){transform:rotateX(90deg) translateZ(48px)}
- .object-face:nth-child(6){transform:rotateX(-90deg) translateZ(48px)}
 }
 </style>
 </head>
@@ -210,6 +184,7 @@ footer{text-align:center;padding:25px;border-top:1px solid var(--line);color:var
   <h1 class="intro-logo">Slayer<span>Shop</span></h1>
   <div class="intro-subtitle">WELCOME TO OUR CATALOG</div>
   
+  <!-- ПРИКОЛЮХА (Анимация) -->
   <div class="eye-container">
     <div class="eye-outer"></div>
     <div class="eye-inner">
@@ -276,25 +251,19 @@ footer{text-align:center;padding:25px;border-top:1px solid var(--line);color:var
  </div>
  <div class="object-scene">
   <div class="object-3d">
-   <div class="object-face"><img src="https://i.ibb.co/3s6GjB6/wolf-dark.jpg" class="wolf-img" alt="Wolf"></div>
-   <div class="object-face"><img src="https://i.ibb.co/3s6GjB6/wolf-dark.jpg" class="wolf-img" alt="Wolf"></div>
-   <div class="object-face"><img src="https://i.ibb.co/3s6GjB6/wolf-dark.jpg" class="wolf-img" alt="Wolf"></div>
-   <div class="object-face"><img src="https://i.ibb.co/3s6GjB6/wolf-dark.jpg" class="wolf-img" alt="Wolf"></div>
-   <div class="object-face"><img src="https://i.ibb.co/3s6GjB6/wolf-dark.jpg" class="wolf-img" alt="Wolf"></div>
-   <div class="object-face"><img src="https://i.ibb.co/3s6GjB6/wolf-dark.jpg" class="wolf-img" alt="Wolf"></div>
+   <div class="object-face"></div>
+   <div class="object-face"></div>
+   <div class="object-face"></div>
+   <div class="object-face"></div>
+   <div class="object-face"></div>
+   <div class="object-face"></div>
   </div>
  </div>
 </section>
 
 <section class="about">
- <h2>ABOUT SLAYER SHOP</h2>
- <p>
-   <strong>SLAYER SHOP</strong> — это не просто магазин. Это закрытое сообщество для тех, кто устал от компромиссов. 
-   
-   Мы работаем в серой зоне, поставляя лабораторные реагенты и фармакологические препараты для исследовательских целей. Здесь нет места «здоровому образу жизни» и пустым обещаниям. Только холодный расчет, точные дозировки и жесткий хардмакс.
-   
-   Если ты чувствуешь в себе зверя, которого не могут сдержать социальные рамки — ты по адресу. Мы не задаем лишних вопросов. Мы просто даем инструменты.
- </p>
+ <h2>ABOUT</h2>
+ <p id="aboutText"></p>
 </section>
 <footer>© 2026 SLAYER SHOP. ALL RIGHTS RESERVED.</footer>
 </div>
@@ -547,4 +516,162 @@ function renderBranches(branches){
   count.className="branch-count";
   count.textContent=branch.products.length+" товаров";
 
-  const arrow=document.createElement
+  const arrow=document.createElement("span");
+  arrow.className="category-arrow";
+  arrow.textContent="↗";
+
+  button.append(number,name,count,arrow);
+  button.onclick=()=>{
+   showProducts(branch.products,branch.name,"branch");
+   window.scrollTo({top:0,behavior:"smooth"});
+  };
+  grid.appendChild(button);
+ });
+}
+
+function showProducts(products,title,from){
+ previousScreen=from;
+ hideSections();
+ document.getElementById("productsSection").classList.remove("hidden");
+ document.getElementById("productsHeading").textContent=title;
+ document.getElementById("backProducts").textContent=
+  from==="branch"?"← НАЗАД К ДВУМ КНОПКАМ":"← НАЗАД К КАТЕГОРИЯМ";
+
+ const grid=document.getElementById("productsGrid");
+ grid.innerHTML="";
+
+ products.forEach((product,index)=>{
+  const card=document.createElement("div");
+  card.className="product-card";
+
+  const button=document.createElement("button");
+  button.className="product-open";
+
+  const name=document.createElement("span");
+  name.className="product-name";
+  name.textContent=product.name;
+
+  button.append(name);
+  button.onclick=()=>openProduct(product);
+
+  const contact=document.createElement("a");
+  contact.className="product-contact";
+  contact.href="https://t.me/sorrowmachine";
+  contact.target="_blank";
+  contact.rel="noopener";
+  contact.textContent="CONTACT THE MANAGER";
+
+  card.append(button,contact);
+  grid.appendChild(card);
+ });
+}
+
+function backToCategories(){
+ hideSections();
+ document.getElementById("categoriesSection").classList.remove("hidden");
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function backFromProducts(){
+ if(previousScreen==="branch"){
+  hideSections();
+  document.getElementById("branchesSection").classList.remove("hidden");
+ }else{
+  backToCategories();
+ }
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function openProduct(product){
+ currentProduct=product;
+ currentForm=0;
+ currentVolume=0;
+
+ document.getElementById("modalTitle").textContent=product.name;
+ document.getElementById("modalDescription").textContent=product.description||"";
+
+ const formArea=document.getElementById("formArea");
+ const formButtons=document.getElementById("formButtons");
+ formButtons.innerHTML="";
+
+ if(product.forms){
+  formArea.classList.remove("hidden");
+
+  product.forms.forEach((form,index)=>{
+   const button=document.createElement("button");
+   button.className="choice-btn";
+   button.textContent=form.name;
+   button.onclick=()=>{
+    currentForm=index;
+    currentVolume=0;
+    renderFormButtons();
+    renderVolumes();
+   };
+   formButtons.appendChild(button);
+  });
+  renderFormButtons();
+ }else{
+  formArea.classList.add("hidden");
+ }
+
+ renderVolumes();
+ document.getElementById("productModal").classList.add("active");
+ document.body.style.overflow="hidden";
+}
+
+function getVolumes(){
+ return currentProduct.forms
+  ?currentProduct.forms[currentForm].volumes
+  :currentProduct.volumes;
+}
+
+function renderFormButtons(){
+ document.querySelectorAll("#formButtons button").forEach((button,index)=>{
+  button.classList.toggle("active",index===currentForm);
+ });
+}
+
+function renderVolumes(){
+ const area=document.getElementById("volumeButtons");
+ area.innerHTML="";
+
+ getVolumes().forEach((item,index)=>{
+  const button=document.createElement("button");
+  button.className="choice-btn";
+  button.textContent=item.volume;
+  button.classList.toggle("active",index===currentVolume);
+
+  button.onclick=()=>{
+   currentVolume=index;
+   renderVolumes();
+  };
+  area.appendChild(button);
+ });
+
+ updatePrice();
+}
+
+function updatePrice(){
+ const item=getVolumes()[currentVolume];
+ document.getElementById("priceDisplay").textContent=
+  item&&item.price?"Цена: "+item.price:"";
+}
+
+function closeModal(){
+ document.getElementById("productModal").classList.remove("active");
+ document.body.style.overflow="";
+}
+
+document.getElementById("productModal").addEventListener("click",function(event){
+ if(event.target===this)closeModal();
+});
+
+document.addEventListener("keydown",function(event){
+ if(event.key==="Escape"){
+  closeModal();
+ }
+});
+
+</script>
+</body>
+</html>
